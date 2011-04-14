@@ -43,11 +43,12 @@
 
         // default options
         options: {
-            tagSource:   [],
-            triggerKeys: ['enter', 'space', 'comma', 'tab'],
-            initialTags: [],
-            minLength:   1,
-            select:      false
+            tagSource:    [],
+            triggerKeys:  ['enter', 'space', 'comma', 'tab'],
+            initialTags:  [],
+            minLength:    1,
+            select:       false,
+            allowNewTags: true
 
         },
 
@@ -112,8 +113,12 @@
 
                 if (self._isInitKey(e.which)) {
                     e.preventDefault();
-                    if ($(this).val().length >= self.options.minLength)
+                    if (self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
                         self._addTag($(this).val());
+                   	} 
+                   	else if (!self.options.allowNewTags){
+                   	    self.input.val("");
+                   	}
                 }
 
                 if (lastLi.hasClass('selected'))
@@ -125,11 +130,11 @@
             //setup blur handler
             this.input.blur(function(e) {
                 var v = $(this).val();
-                this.timer = setTimeout(function(){
-                    self._addTag(v);
-                }, 50000);
-                console.log(this.timer);
-
+                if(self.options.allowNewTags) {
+                    this.timer = setTimeout(function(){
+                        self._addTag(v);
+                    }, 50000);
+				}
                 $(this).val('');
                 return false;
             });
