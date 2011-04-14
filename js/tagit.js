@@ -52,11 +52,11 @@
         },
 
         _keys: {
-            backspace: 8,
-            enter:     13,
-            space:     32,
-            comma:     44,
-            tab:       9
+            backspace: [8],
+            enter:     [13],
+            space:     [32],
+            comma:     [44,188],
+            tab:       [9]
         },
 
         //initialization function
@@ -199,9 +199,9 @@
         _isInitKey : function(keyCode) {
             var keyName = "";
             for (var key in this._keys)
-                if (this._keys[key] == keyCode)
-                    keyName = key
-
+        		if ($.inArray(keyCode, this._keys[key]) != -1)
+        			keyName = key;
+        			
             if ($.inArray(keyName, this.options.triggerKeys) != -1)
                 return true;
             return false;
