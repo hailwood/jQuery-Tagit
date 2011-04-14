@@ -131,9 +131,9 @@
             this.input.blur(function(e) {
                 var v = $(this).val();
                 if(self.options.allowNewTags) {
-                    this.timer = setTimeout(function(){
+                    self.timer = setTimeout(function(){
                         self._addTag(v);
-                    }, 50000);
+                    }, 400);
                 }
                 $(this).val('');
                 return false;
