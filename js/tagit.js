@@ -134,7 +134,7 @@
                     this.timer = setTimeout(function(){
                         self._addTag(v);
                     }, 50000);
-				}
+                }
                 $(this).val('');
                 return false;
             });
