@@ -48,7 +48,8 @@
             initialTags:  [],
             minLength:    1,
             select:       false,
-            allowNewTags: true
+            allowNewTags: true,
+            emptySearch: true // empty search on focus
 
         },
 
@@ -90,10 +91,13 @@
                 }
                 else {
                     self.input.focus();
+                    if(self.options.emptySearch && $(e.target).hasClass('tagit-input') && self.input.val() == '' &&  self.input.autocomplete != undefined) {
+                    	self.input.autocomplete('search');
+                    }
                 }
             });
 
-            //setup autcomplete handler
+            //setup autocomplete handler
             var os = this.options.select;
             this.options.appendTo = this.element;
             this.options.source = this.options.tagSource;
@@ -154,11 +158,13 @@
 
         _popSelect: function(text) {
             this.select.children('option[value="' + text + '"]').remove();
+            this.select.change();
         }
         ,
 
         _addSelect: function(value) {
             this.select.append('<option selected="selected" value="' + value + '">' + value + '</option>');
+            this.select.change();
         }
         ,
 
