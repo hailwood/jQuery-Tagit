@@ -43,20 +43,22 @@
 
         // default options
         options: {
-            tagSource:   [],
-            triggerKeys: ['enter', 'space', 'comma', 'tab'],
-            initialTags: [],
-            minLength:   1,
-            select:      false
+            tagSource:    [],
+            triggerKeys:  ['enter', 'space', 'comma', 'tab'],
+            initialTags:  [],
+            minLength:    1,
+            select:       false,
+            allowNewTags: true,
+            emptySearch: true // empty search on focus
 
         },
 
         _keys: {
-            backspace: 8,
-            enter:     13,
-            space:     32,
-            comma:     44,
-            tab:       9
+            backspace: [8],
+            enter:     [13],
+            space:     [32],
+            comma:     [44,188],
+            tab:       [9]
         },
 
         //initialization function
@@ -89,10 +91,13 @@
                 }
                 else {
                     self.input.focus();
+                    if(self.options.emptySearch && $(e.target).hasClass('tagit-input') && self.input.val() == '' &&  self.input.autocomplete != undefined) {
+                    	self.input.autocomplete('search');
+                    }
                 }
             });
 
-            //setup autcomplete handler
+            //setup autocomplete handler
             var os = this.options.select;
             this.options.appendTo = this.element;
             this.options.source = this.options.tagSource;
@@ -112,8 +117,12 @@
 
                 if (self._isInitKey(e.which)) {
                     e.preventDefault();
-                    if ($(this).val().length >= self.options.minLength)
+                    if (self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
                         self._addTag($(this).val());
+                   	} 
+                   	else if (!self.options.allowNewTags){
+                   	    self.input.val("");
+                   	}
                 }
 
                 if (lastLi.hasClass('selected'))
@@ -125,10 +134,11 @@
             //setup blur handler
             this.input.blur(function(e) {
                 var v = $(this).val();
-                this.timer = setTimeout(function(){
-                    self._addTag(v);
-                }, 50000);
-
+                if(self.options.allowNewTags) {
+                    self.timer = setTimeout(function(){
+                        self._addTag(v);
+                    }, 400);
+                }
                 $(this).val('');
                 return false;
             });
@@ -148,11 +158,13 @@
 
         _popSelect: function(text) {
             this.select.children('option[value="' + text + '"]').remove();
+            this.select.change();
         }
         ,
 
         _addSelect: function(value) {
             this.select.append('<option selected="selected" value="' + value + '">' + value + '</option>');
+            this.select.change();
         }
         ,
 
@@ -198,9 +210,9 @@
         _isInitKey : function(keyCode) {
             var keyName = "";
             for (var key in this._keys)
-                if (this._keys[key] == keyCode)
-                    keyName = key
-
+        		if ($.inArray(keyCode, this._keys[key]) != -1)
+        			keyName = key;
+        			
             if ($.inArray(keyName, this.options.triggerKeys) != -1)
                 return true;
             return false;
