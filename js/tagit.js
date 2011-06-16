@@ -128,7 +128,6 @@
                 this.timer = setTimeout(function(){
                     self._addTag(v);
                 }, 50000);
-                console.log(this.timer);
 
                 $(this).val('');
                 return false;
@@ -231,10 +230,11 @@
         ,
 
         _initialTags: function() {
+            var input = this;
             if (this.options.initialTags.length != 0) {
-                for (var i in this.options.initialTags)
-                    if (!this._exists(this.options.initialTags[i]))
-                        this._addTag(this.options.initialTags[i]);
+                this.options.initialTags.each(function (i){
+                    input._addTag(i);
+                });
             }
         }
         ,
