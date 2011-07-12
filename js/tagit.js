@@ -244,8 +244,8 @@
         _initialTags: function() {
             var input = this;
             if (this.options.initialTags.length != 0) {
-                this.options.initialTags.each(function (i){
-                    input._addTag(i);
+                this.options.initialTags.each(function(i, element){
+                    input._addTag(element);
                 });
             }
         }
