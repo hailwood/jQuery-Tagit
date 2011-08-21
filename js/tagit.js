@@ -133,10 +133,11 @@
 
             //setup blur handler
             this.input.blur(function(e) {
-                var v = $(this).val();
+                self.currentValue = $(this).val();
                 if(self.options.allowNewTags) {
                     self.timer = setTimeout(function(){
-                        self._addTag(v);
+                        self._addTag(self.currentValue);
+                        self.currentValue = '';
                     }, 400);
                 }
                 $(this).val('');
