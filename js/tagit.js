@@ -119,6 +119,7 @@
             this.options.focus = function(event, ui) {
             	if (ui.item.label !== undefined) {
             		inputBox.val(ui.item.label);
+            		inputBox.attr('tagValue', ui.item.value);
             		return false;
             	}
             }
@@ -149,14 +150,16 @@
 
             //setup blur handler
             this.input.blur(function(e) {
-                self.currentValue = $(this).val();
+                self.currentLabel = $(this).val();
+                self.currentValue = $(this).attr('tagValue');
                 if(self.options.allowNewTags) {
                     self.timer = setTimeout(function(){
-                        self._addTag(self.currentValue);
+                        self._addTag(self.currentLabel, self.currentValue);
                         self.currentValue = '';
+                        self.currentLabel = '';
                     }, 400);
                 }
-                $(this).val('');
+                $(this).val('').removeAttr('tagValue');
                 return false;
             });
 
