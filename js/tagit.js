@@ -243,9 +243,12 @@
         		return false;
         	}
     		
-        	if (value === undefined)
-    			return $.inArray(label, this.tagsArray) != -1;
-    		else {
+        	if (value === undefined) {
+        		for(var ind in this.tagsArray) {
+    				if (label == this.tagsArray[ind] || label == this.tagsArray[ind].label)
+    					return true;
+    			}
+        	} else {
     			for(var ind in this.tagsArray) {
     				if (value == this.tagsArray[ind].value)
     					return true;
