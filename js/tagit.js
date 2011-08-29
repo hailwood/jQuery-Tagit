@@ -314,6 +314,17 @@
             $.Widget.prototype.destroy.apply(this, arguments); // default destroy
             this.tagsArray = [];
         }
+        ,
+        
+        reset: function() {
+        	this.element.find(".tagit-choice").remove();
+        	this.tagsArray = [];
+        	if (this.options.select) {
+        		this.select.children().remove();
+        		this.select.change();
+        	}
+        	this._initialTags();
+        }
 
     });
 })(jQuery);
