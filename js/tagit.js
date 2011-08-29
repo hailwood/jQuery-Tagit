@@ -73,7 +73,10 @@
 
             //add any initial tags added through html to the array
             this.element.children('li').each(function() {
-                self.options.initialTags.push($(this).text());
+            	var tagValue = $(this).attr('tagValue');
+                self.options.initialTags.push(
+                	tagValue ? {label: $(this).text(), value: tagValue} : $(this).text()
+                );
             });
 
             //add the html input
