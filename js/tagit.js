@@ -73,7 +73,10 @@
 
             //add any initial tags added through html to the array
             this.element.children('li').each(function() {
-                self.options.initialTags.push($(this).text());
+            	var tagValue = $(this).attr('tagValue');
+                self.options.initialTags.push(
+                	tagValue ? {label: $(this).text(), value: tagValue} : $(this).text()
+                );
             });
 
             //add the html input
@@ -85,9 +88,15 @@
             $(this.element).click(function(e) {
                 if ($(e.target).hasClass('tagit-close')) {
                     // Removes a tag when the little 'x' is clicked.
-                    $(e.target).parent().remove();
-                    var text = $(e.target).parent().text();
-                    self._popTag(text.substr(0, text.length - 1));
+                	var parent = $(e.target).parent();
+                    parent.remove();
+                    var tagValue = parent.attr('tagValue');
+                    if (tagValue) {
+                    	self._popTag(null, tagValue);
+                    } else {
+	                    var text = parent.text();
+	                    self._popTag(text.substr(0, text.length - 1));
+                    }
                 }
                 else {
                     self.input.focus();
@@ -103,8 +112,19 @@
             this.options.source = this.options.tagSource;
             this.options.select = function(event, ui) {
                 clearTimeout(self.timer);
-                self._addTag(ui.item.value);
+                if (ui.item.label === undefined)
+                	self._addTag(ui.item.value);
+                else
+                	self._addTag(ui.item.label, ui.item.value);
                 return false;
+            }
+            var inputBox = this.input;
+            this.options.focus = function(event, ui) {
+            	if (ui.item.label !== undefined) {
+            		inputBox.val(ui.item.label);
+            		inputBox.attr('tagValue', ui.item.value);
+            		return false;
+            	}
             }
             this.input.autocomplete(this.options);
             this.options.select = os;
@@ -133,14 +153,16 @@
 
             //setup blur handler
             this.input.blur(function(e) {
-                self.currentValue = $(this).val();
+                self.currentLabel = $(this).val();
+                self.currentValue = $(this).attr('tagValue');
                 if(self.options.allowNewTags) {
                     self.timer = setTimeout(function(){
-                        self._addTag(self.currentValue);
+                        self._addTag(self.currentLabel, self.currentValue);
                         self.currentValue = '';
+                        self.currentLabel = '';
                     }, 400);
                 }
-                $(this).val('');
+                $(this).val('').removeAttr('tagValue');
                 return false;
             });
 
@@ -157,54 +179,85 @@
 
         },
 
-        _popSelect: function(text) {
-            this.select.children('option[value="' + text + '"]').remove();
+        _popSelect: function(label, value) {
+        	this.select.children('option[value="' + (value === undefined ? label : value) + '"]').remove();
             this.select.change();
         }
         ,
 
-        _addSelect: function(value) {
-            this.select.append('<option selected="selected" value="' + value + '">' + value + '</option>');
+        _addSelect: function(label, value) {
+            this.select.append('<option selected="selected" value="'
+            	+ (value === undefined ? label : value)
+            	+ '">' + label + '</option>');
             this.select.change();
         }
         ,
 
-        _popTag: function(text) {
-            $.inArray(text, this.tagsArray);
-            if (text == undefined) {
-                text = this.tagsArray.pop();
-            }
-            else {
-                var index = ($.inArray(text, this.tagsArray) == -1 ? this.tagsArray.length - 1 : $.inArray(text, this.tagsArray));
+        _popTag: function(label, value) {
+            if (label === undefined) {
+                label = this.tagsArray.pop();
+                if (typeof (label) == 'object') {
+                	value = label.value;
+                	label = label.label;
+                }
+            } else {
+            	var index;
+            	if (value === undefined) {
+            		index = $.inArray(label, this.tagsArray);
+            		index = (index == -1 ? this.tagsArray.length - 1 : index);
+            	} else {
+            		index = this.tagsArray.length - 1;
+            		for (var i in this.tagsArray) {
+            			if (this.tagsArray[i].value == value) {
+            				index = i;
+            				break;
+            			}
+            		}
+            	}
                 this.tagsArray.splice(index, 1);
             }
             if (this.options.select)
-                this._popSelect(text);
+                this._popSelect(label, value);
         }
         ,
 
-        _addTag: function(value) {
+        _addTag: function(label, value) {
             this.input.val("");
-            value = value.replace(/,+$/, "");
-            value = value.trim();
-            if (value == "" || this._exists(value))
+            label = label.replace(/,+$/, "");
+            label = label.trim();
+            if (label == "" || this._exists(label, value))
                 return false;
 
             var tag = "";
-            tag = '<li class="tagit-choice">' + value + '<a class="tagit-close">x</a></li>';
+            tag = '<li class="tagit-choice"'
+            	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
+            	+ '>' + label + '<a class="tagit-close">x</a></li>';
             $(tag).insertBefore(this.input.parent());
             this.input.val("");
-            this.tagsArray.push(value);
+            this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
-                this._addSelect(value);
+                this._addSelect(label, value);
             return true;
         }
         ,
 
-        _exists: function(value) {
-            if (this.tagsArray.length == 0 || $.inArray(value, this.tagsArray) == -1)
-                return false;
-            return true;
+        _exists: function(label, value) {
+        	if (this.tagsArray.length == 0) {
+        		return false;
+        	}
+    		
+        	if (value === undefined) {
+        		for(var ind in this.tagsArray) {
+    				if (label == this.tagsArray[ind] || label == this.tagsArray[ind].label)
+    					return true;
+    			}
+        	} else {
+    			for(var ind in this.tagsArray) {
+    				if (value == this.tagsArray[ind].value)
+    					return true;
+    			}
+    		}
+            return false;
         }
         ,
 
@@ -246,7 +299,10 @@
             var input = this;
             if (this.options.initialTags.length != 0) {
                 $(this.options.initialTags).each(function(i, element){
-                    input._addTag(element);
+                	if (typeof (element) == "object")
+                		input._addTag(element.label, element.value);
+                	else
+                		input._addTag(element);
                 });
             }
         }
