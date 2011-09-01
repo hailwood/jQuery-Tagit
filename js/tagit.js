@@ -120,7 +120,7 @@
             }
             var inputBox = this.input;
             this.options.focus = function(event, ui) {
-            	if (ui.item.label !== undefined) {
+            	if (ui.item.label !== undefined && /^key/.test(event.originalEvent.type)) {
             		inputBox.val(ui.item.label);
             		inputBox.attr('tagValue', ui.item.value);
             		return false;
