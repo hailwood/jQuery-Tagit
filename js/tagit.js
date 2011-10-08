@@ -328,6 +328,24 @@
         	}
         	this._initialTags();
         }
+        ,
+        
+        add: function(label, value) {
+            label = label.replace(/,+$/, "");
+            label = label.trim();
+            if (label == "" || this._exists(label, value))
+                return false;
+
+            var tag = "";
+            tag = '<li class="tagit-choice"'
+            	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
+            	+ '>' + label + '<a class="tagit-close">x</a></li>';
+            $(tag).insertBefore(this.input.parent());
+            this.tagsArray.push(value === undefined ? label : {label: label, value: value});
+            if (this.options.select)
+                this._addSelect(label, value);
+            return true;
+        }
 
     });
 })(jQuery);
