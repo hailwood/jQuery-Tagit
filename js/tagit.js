@@ -120,7 +120,7 @@
             }
             var inputBox = this.input;
             this.options.focus = function(event, ui) {
-            	if (ui.item.label !== undefined) {
+            	if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
             		inputBox.val(ui.item.label);
             		inputBox.attr('tagValue', ui.item.value);
             		return false;
@@ -329,6 +329,24 @@
         		this.select.change();
         	}
         	this._initialTags();
+        }
+        ,
+        
+        add: function(label, value) {
+            label = label.replace(/,+$/, "");
+            label = label.trim();
+            if (label == "" || this._exists(label, value))
+                return false;
+
+            var tag = "";
+            tag = '<li class="tagit-choice"'
+            	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
+            	+ '>' + label + '<a class="tagit-close">x</a></li>';
+            $(tag).insertBefore(this.input.parent());
+            this.tagsArray.push(value === undefined ? label : {label: label, value: value});
+            if (this.options.select)
+                this._addSelect(label, value);
+            return true;
         }
 
     });
