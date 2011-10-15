@@ -186,9 +186,11 @@
         ,
 
         _addSelect: function(label, value) {
-            this.select.append('<option selected="selected" value="'
-            	+ (value === undefined ? label : value)
-            	+ '">' + label + '</option>');
+        	var opt = $('<option>').attr({
+        		'selected':'selected',
+        		'value':(value === undefined ? label : value)
+        	}).text(label);
+        	this.select.append(opt);
             this.select.change();
         }
         ,
