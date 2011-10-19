@@ -173,7 +173,7 @@
 
             if (this.options.select) {
                 this.element.after('<select class="tagit-hiddenSelect" name="'+this.element.attr('name')+'" multiple="multiple"></select>');
-                this.select = this.element.siblings('.tagit-hiddenSelect');
+                this.select = this.element.next('.tagit-hiddenSelect');
             }
             this._initialTags();
 
