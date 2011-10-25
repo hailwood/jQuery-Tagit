@@ -36,6 +36,10 @@
  * * Number 04
  * * Bug: console.log() left in code
  * * Name: claudio <unknown>
+ * --
+ * * Number 06
+ * * Feature: added fill method
+ * * Name: Shawn Wildermuth <wildermuth.com>
  */
 
 (function($) {
@@ -329,6 +333,20 @@
         		this.select.change();
         	}
         	this._initialTags();
+        }
+        ,
+        
+        fill: function (tags) {
+          this.element.find(".tagit-choice").remove();
+          this.tagsArray = [];
+          if (tags !== undefined) {
+            this.options.initialTags = tags;
+          }
+          if (this.options.select) {
+            this.select.children().remove();
+            this.select.change();
+          }
+          this._initialTags();
         }
         ,
         
