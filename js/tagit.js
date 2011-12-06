@@ -343,6 +343,8 @@
         		this.select.change();
         	}
         	this._initialTags();
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(null, 'reseted', null);
         }
         ,
         
@@ -374,7 +376,8 @@
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
-            alert('sss');
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'added', $(tag));
 
             return true;
         }

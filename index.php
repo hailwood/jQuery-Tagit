@@ -46,6 +46,7 @@
 
             $('#demo1GetTags').click(function(){showTags($('#demo1').tagit('tags'))});
             $('#demo2GetTags').click(function(){showTags($('#demo2').tagit('tags'))});
+            $('#demo2ResetTags').click(function(){$('#demo2').tagit('reset')});
             $('#demo3GetTags').click(function(){showTags($('#demo3').tagit('tags'))});
             $('#demo4GetTags').click(function(){showTags($('#demo4').tagit('tags'))});
 
@@ -188,7 +189,7 @@
                 <td>function(tagValue, action, element)</td>
                 <td class="left">Callback on changed tags:<br>
                 <b>tagValue:</b> string<br>
-                <b>action:</b> string - either 'added' or 'popped'<br>
+                <b>action:</b> string - either 'added', 'popped' or 'reseted'<br>
                 <b>element:</b> object - reference to the added LI element</td>
             </tr>
             </tbody>
@@ -217,6 +218,12 @@
                 <td>.tagit("tags")</td>
                 <td>Array</td>
                 <td class="left">Returns an array of all tags</td>
+            </tr>
+
+            <tr class="odd">
+                <td>.tagit("reset")</td>
+                <td>null</td>
+                <td class="left">Resets the tags list to the initial value</td>
             </tr>
 
             </tbody>
@@ -256,6 +263,7 @@
             </ul>
             <div class="buttons">
                 <button id="demo2GetTags" value="Get Tags">Get Tags</button>
+                <button id="demo2ResetTags" value="Reset Tags">Reset Tags</button>
             </div>
         </div>
 
