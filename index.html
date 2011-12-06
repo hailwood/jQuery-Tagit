@@ -188,9 +188,20 @@
                 <td>function(tagValue, action, element)</td>
                 <td class="left">Callback on changed tags:<br>
                 <b>tagValue:</b> string<br>
-                <b>action:</b> string - either 'added', 'popped' or 'reseted'<br>
+                <b>action:</b> string - either 'added', 'popped' or 'resetted'<br>
                 <b>element:</b> object - reference to the added LI element</td>
             </tr>
+
+           <tr class="odd">
+                <td>caseSensitive</td>
+                <td>bool</td>
+                <td>false</td>
+                <td class="left">
+                  The check for existing tags is case sensitive.<br />
+                  If set to <i>false</i> the words "Foo" and "foo" considered the same
+                </td>
+              </tr>
+
             </tbody>
         </table>
     </div>

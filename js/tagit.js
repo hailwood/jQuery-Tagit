@@ -53,6 +53,7 @@
             minLength:    1,
             select:       false,
             allowNewTags: true,
+            caseSensitive: false,
             emptySearch: true, // empty search on focus
             tagsChanged: function(tagValue, action, element) {;}
         },
@@ -287,12 +288,12 @@
     		
         	if (value === undefined) {
         		for(var ind in this.tagsArray) {
-    				if (label == this.tagsArray[ind] || label == this.tagsArray[ind].label)
+    				if (this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
     					return true;
     			}
         	} else {
     			for(var ind in this.tagsArray) {
-    				if (value == this.tagsArray[ind].value)
+    				if (this._lowerIfCaseInsensitive(value) == this._lowerIfCaseInsensitive(this.tagsArray[ind].value))
     					return true;
     			}
     		}
@@ -353,6 +354,15 @@
         }
         ,
 
+        _lowerIfCaseInsensitive: function (inp) {
+            if (inp === undefined)
+                return inp;
+
+            if (this.options.caseSensitive)
+                return inp;
+            return inp.toLowerCase();
+        }
+        ,
         tags: function() {
             return this.tagsArray;
         }
