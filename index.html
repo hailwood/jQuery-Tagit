@@ -39,11 +39,13 @@
             $('#demo1').tagit({tagSource: availableTags, select: true});
             $('#demo2').tagit({tagSource: availableTags});
             $('#demo3').tagit({tagSource: availableTags, triggerKeys: ['enter', 'comma', 'tab']});
+            $('#demo4').tagit({tagSource: availableTags, tagsChanged: function(a,b){$('#demo4Out').html(a + ' was ' + b); } });
 
 
             $('#demo1GetTags').click(function(){showTags($('#demo1').tagit('tags'))});
             $('#demo2GetTags').click(function(){showTags($('#demo2').tagit('tags'))});
             $('#demo3GetTags').click(function(){showTags($('#demo3').tagit('tags'))});
+            $('#demo4GetTags').click(function(){showTags($('#demo4').tagit('tags'))});
 
             function showTags(tags){
                 var string = "Tags\r\n";
@@ -170,12 +172,22 @@
                 <td class="left">The minimum length before a triggerKey will create a tag</td>
             </tr>
 
-            <tr class="even">
+            <tr class="odd">
                 <td>select</td>
                 <td>bool</td>
                 <td>false</td>
                 <td class="left">Maintain a hidden select in place for form submissions<br />
                     To name the select simply give your UL a name attribute!</td>
+            </tr>
+
+            <tr class="even">
+                <td>tagsChanged</td>
+                <td>method</td>
+                <td>function(tagValue, action, element)</td>
+                <td class="left">Callback on changed tags:<br>
+                <b>tagValue:</b> string<br>
+                <b>action:</b> string - either 'added' or 'popped'<br>
+                <b>element:</b> object - reference to the added LI element</td>
             </tr>
             </tbody>
         </table>
@@ -210,14 +222,6 @@
     </div>
 
     <h2><a name="demos">Demos</a></h2>
-    <div class="box"><strong>Theme: </strong>
-        <a href="?theme=simple-green#demos">Simple Green</a> |
-        <a href="?theme=simple-blue#demos">Simple Blue</a> |
-        <a href="?theme=simple-grey#demos">Simple Grey</a> |
-        <a href="?theme=gradient-black#demos">Gradient Black</a> |
-        <a href="?theme=gradient-blue#demos">Gradient Blue</a> |
-        <a href="?theme=gradient-green#demos">Gradient Green</a> | 
-    </div>
 
     <div class="box">
         <h3>Hidden Select</h3>
@@ -250,8 +254,20 @@
         <div class="box">
             <ul id="demo3"></ul>
             <div class="buttons">
-                <button id="demo13GetTags" value="Get Tags">Get Tags</button>
+                <button id="demo3GetTags" value="Get Tags">Get Tags</button>
             </div>
+        </div>
+
+        <h3>Callback</h3>
+
+        <div class="box">
+            <ul id="demo4"></ul>
+            <div class="buttons">
+                <button id="demo4GetTags" value="Get Tags">Get Tags</button>
+            </div>
+            <p>Action:
+            <div id="demo4Out">none</div>
+            <p>
         </div>
     </div>
 
