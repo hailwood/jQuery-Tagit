@@ -53,8 +53,8 @@
             minLength:    1,
             select:       false,
             allowNewTags: true,
-            emptySearch: true // empty search on focus
-
+            emptySearch: true, // empty search on focus
+            tagsChanged: function(tagValue, action, element) {;}
         },
 
         _keys: {
@@ -224,6 +224,8 @@
             }
             if (this.options.select)
                 this._popSelect(label, value);
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'popped', null);
         }
         ,
 
@@ -243,6 +245,8 @@
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'added', $(tag));
             return true;
         }
         ,
@@ -303,6 +307,11 @@
 
         _initialTags: function() {
             var input = this;
+            var _temp;
+            if (this.options.tagsChanged)
+                _temp = this.options.tagsChanged;
+            this.options.tagsChanged = null;
+
             if (this.options.initialTags.length != 0) {
                 $(this.options.initialTags).each(function(i, element){
                 	if (typeof (element) == "object")
@@ -311,6 +320,7 @@
                 		input._addTag(element);
                 });
             }
+            this.options.tagsChanged = _temp;
         }
         ,
 
@@ -364,6 +374,8 @@
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
+            alert('sss');
+
             return true;
         }
 
