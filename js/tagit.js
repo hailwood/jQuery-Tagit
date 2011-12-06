@@ -57,6 +57,8 @@
             tagsChanged: function(tagValue, action, element) {;}
         },
 
+        _split: /\ |,/g,
+
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -82,6 +84,15 @@
                 	tagValue ? {label: $(this).text(), value: tagValue} : $(this).text()
                 );
             });
+
+            //setup split according to the trigger keys
+            self._split = null;
+            if ($.inArray('space', self.options.triggerKeys) > 0 && $.inArray('comma', self.options.triggerKeys) > 0)
+                self._split = /\ |,/g;
+            else if ($.inArray('space', self.options.triggerKeys) > 0)
+                self._split = /\ /g;
+            else if ($.inArray('comma', self.options.triggerKeys) > 0)
+                self._split = /,/g;
 
             //add the html input
             this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
@@ -154,7 +165,7 @@
 
                 self.lastKey = e.which;
             });
-
+                
             //setup blur handler
             this.input.blur(function(e) {
                 self.currentLabel = $(this).val();
@@ -231,6 +242,14 @@
 
         _addTag: function(label, value) {
             this.input.val("");
+
+            if (this._split && label.search(this._split) > 0){
+                var result = label.split(this._split);
+                for (var i = 0; i < result.length; i++)
+                    this._addTag(result[i], value );
+                return;
+            }
+
             label = label.replace(/,+$/, "");
             label = label.trim();
             if (label == "" || this._exists(label, value))
@@ -364,6 +383,14 @@
         
         add: function(label, value) {
             label = label.replace(/,+$/, "");
+
+            if (this._split && label.search(this._split) > 0){
+                var result = label.split(this._split);
+                for (var i = 0; i < result.length; i++)
+                    this.add(result[i], value );
+                return;
+            }
+
             label = label.trim();
             if (label == "" || this._exists(label, value))
                 return false;
