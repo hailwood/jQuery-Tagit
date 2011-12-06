@@ -57,8 +57,8 @@
             tagsChanged: function(tagValue, action, element) {;}
         },
 
-        _split: /\ |,/g,
-
+        _splitAt: /\ |,/g,
+        _cntrlPressed: false,
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -86,13 +86,13 @@
             });
 
             //setup split according to the trigger keys
-            self._split = null;
+            self._splitAt = null;
             if ($.inArray('space', self.options.triggerKeys) > 0 && $.inArray('comma', self.options.triggerKeys) > 0)
-                self._split = /\ |,/g;
+                self._splitAt = /\ |,/g;
             else if ($.inArray('space', self.options.triggerKeys) > 0)
-                self._split = /\ /g;
+                self._splitAt = /\ /g;
             else if ($.inArray('comma', self.options.triggerKeys) > 0)
-                self._split = /,/g;
+                self._splitAt = /,/g;
 
             //add the html input
             this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
@@ -159,11 +159,21 @@
                    	    self.input.val("");
                    	}
                 }
+                
+                _cntrlPressed = e.ctrlKey;
 
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
 
                 self.lastKey = e.which;
+            });
+
+            this.input.keyup(function(e){
+                if (_cntrlPressed && e.which == 86)
+                   $(this).blur();
+                
+                // timeout for the fast copy pasters
+                window.setTimeout(function() {_cntrlPressed = e.ctrlKey;}, 250);
             });
                 
             //setup blur handler
@@ -243,8 +253,8 @@
         _addTag: function(label, value) {
             this.input.val("");
 
-            if (this._split && label.search(this._split) > 0){
-                var result = label.split(this._split);
+            if (this._splitAt && label.search(this._splitAt) > 0){
+                var result = label.split(this._splitAt);
                 for (var i = 0; i < result.length; i++)
                     this._addTag(result[i], value );
                 return;
@@ -384,8 +394,8 @@
         add: function(label, value) {
             label = label.replace(/,+$/, "");
 
-            if (this._split && label.search(this._split) > 0){
-                var result = label.split(this._split);
+            if (this._splitAt && label.search(this._splitAt) > 0){
+                var result = label.split(this._splitAt);
                 for (var i = 0; i < result.length; i++)
                     this.add(result[i], value );
                 return;
