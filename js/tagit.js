@@ -58,7 +58,7 @@
         },
 
         _splitAt: /\ |,/g,
-        _cntrlPressed: false,
+        _pasteMetaKeyPressed: false,
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -160,7 +160,7 @@
                    	}
                 }
                 
-                _cntrlPressed = e.ctrlKey;
+                _pasteMetaKeyPressed = e.metaKey;
 
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
@@ -169,11 +169,12 @@
             });
 
             this.input.keyup(function(e){
-                if (_cntrlPressed && e.which == 86)
+
+                if (_pasteMetaKeyPressed && (e.which == 91 || e.which == 86))
                    $(this).blur();
                 
                 // timeout for the fast copy pasters
-                window.setTimeout(function() {_cntrlPressed = e.ctrlKey;}, 250);
+                window.setTimeout(function() {_pasteMetaKeyPressed = e.metaKey;}, 250);
             });
                 
             //setup blur handler
