@@ -160,11 +160,10 @@
                    	}
                 }
                 
-                _pasteMetaKeyPressed = e.metaKey;
-
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
-
+                
+                _pasteMetaKeyPressed = e.metaKey;
                 self.lastKey = e.which;
             });
 
@@ -267,16 +266,16 @@
                 return false;
 
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.input.val("");
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(label, 'added', $(tag));
+                this.options.tagsChanged(label, 'added', tag);
             return true;
         }
         ,
@@ -407,15 +406,15 @@
                 return false;
 
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(label, 'added', $(tag));
+                this.options.tagsChanged(label, 'added', tag);
 
             return true;
         }
