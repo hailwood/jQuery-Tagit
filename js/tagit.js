@@ -47,19 +47,21 @@
 
         // default options
         options: {
-            tagSource:    [],
-            triggerKeys:  ['enter', 'space', 'comma', 'tab'],
-            initialTags:  [],
-            minLength:    1,
-            select:       false,
-            allowNewTags: true,
-            caseSensitive: false,
-            emptySearch: true, // empty search on focus
-            tagsChanged: function(tagValue, action, element) {;}
+            tagSource:              [],
+            triggerKeys:            ['enter', 'space', 'comma', 'tab'],
+            initialTags:            [],
+            minLength:              1,
+            select:                 false,
+            allowNewTags:           true,
+            caseSensitive:          false,
+            highlightOnExistColor:  '#0F0',
+            emptySearch:            true, // empty search on focus
+            tagsChanged:            function(tagValue, action, element) {;}
         },
 
         _splitAt: /\ |,/g,
         _cntrlPressed: false,
+        _existingAtIndex: 0,
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -253,7 +255,7 @@
 
         _addTag: function(label, value) {
             this.input.val("");
-
+            
             if (this._splitAt && label.search(this._splitAt) > 0){
                 var result = label.split(this._splitAt);
                 for (var i = 0; i < result.length; i++)
@@ -263,8 +265,14 @@
 
             label = label.replace(/,+$/, "");
             label = label.trim();
-            if (label == "" || this._exists(label, value))
+            if (label == "")
                 return false;
+
+            if (this._exists(label, value)){
+                this._highlightExisting();
+                return false;
+            }
+
 
             var tag = "";
             tag = '<li class="tagit-choice"'
@@ -282,22 +290,35 @@
         ,
 
         _exists: function(label, value) {
-        	if (this.tagsArray.length == 0) {
+        	if (this.tagsArray.length == 0)
         		return false;
-        	}
     		
         	if (value === undefined) {
+                this._existingAtIndex = 0;
         		for(var ind in this.tagsArray) {
     				if (this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
     					return true;
+                    this._existingAtIndex++;
     			}
         	} else {
+                this._existingAtIndex = 0;
     			for(var ind in this.tagsArray) {
     				if (this._lowerIfCaseInsensitive(value) == this._lowerIfCaseInsensitive(this.tagsArray[ind].value))
     					return true;
+                    this._existingAtIndex++;
     			}
     		}
+            this._existingAtIndex = -1;
             return false;
+        }
+        ,
+
+        _highlightExisting: function(){
+            if (this.options.highlightOnExistColor === undefined)
+                return;
+            var duplicate = $($(this.element).children(".tagit-choice")[this._existingAtIndex]);
+            var before = duplicate.css('background-color');
+            duplicate.css('background-color', this.options.highlightOnExistColor).animate({'background-color': before}, 700);
         }
         ,
 

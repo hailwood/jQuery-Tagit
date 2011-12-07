@@ -201,6 +201,16 @@
                   The check for existing tags is case sensitive. If false the words "Foo" and "foo" considered the same
                 </td>
               </tr>
+            
+           <tr class="even">
+                <td>highlightOnExistColor</td>
+                <td>string</td>
+                <td>#0F0</td>
+                <td class="left">
+                    If the user tries to add a tag, that already exists, the existing tag will run a highlight effect using the defined background color.
+                    If null, the highlight effect is turned off.
+                </td>
+              </tr>  
               
             </tbody>
         </table>
