@@ -317,8 +317,10 @@
             if (this.options.highlightOnExistColor === undefined)
                 return;
             var duplicate = $($(this.element).children(".tagit-choice")[this._existingAtIndex]);
-            var before = duplicate.css('background-color');
-            duplicate.css('background-color', this.options.highlightOnExistColor).animate({'background-color': before}, 700);
+            duplicate.stop();
+
+            var beforeFont = duplicate.css('color');
+            duplicate.animate({color: this.options.highlightOnExistColor},100).animate({'color': beforeFont}, 800);
         }
         ,
 
