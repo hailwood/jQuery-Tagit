@@ -47,16 +47,21 @@
 
         // default options
         options: {
-            tagSource:    [],
-            triggerKeys:  ['enter', 'space', 'comma', 'tab'],
-            initialTags:  [],
-            minLength:    1,
-            select:       false,
-            allowNewTags: true,
-            emptySearch: true // empty search on focus
-
+            tagSource:              [],
+            triggerKeys:            ['enter', 'space', 'comma', 'tab'],
+            initialTags:            [],
+            minLength:              1,
+            select:                 false,
+            allowNewTags:           true,
+            caseSensitive:          false,
+            highlightOnExistColor:  '#0F0',
+            emptySearch:            true, // empty search on focus
+            tagsChanged:            function(tagValue, action, element) {;}
         },
 
+        _splitAt:               /\ |,/g,
+        _existingAtIndex:       0,
+        _pasteMetaKeyPressed:   false,
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -82,6 +87,15 @@
                 	tagValue ? {label: $(this).text(), value: tagValue} : $(this).text()
                 );
             });
+
+            //setup split according to the trigger keys
+            self._splitAt = null;
+            if ($.inArray('space', self.options.triggerKeys) > 0 && $.inArray('comma', self.options.triggerKeys) > 0)
+                self._splitAt = /\ |,/g;
+            else if ($.inArray('space', self.options.triggerKeys) > 0)
+                self._splitAt = /\ /g;
+            else if ($.inArray('comma', self.options.triggerKeys) > 0)
+                self._splitAt = /,/g;
 
             //add the html input
             this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
@@ -148,13 +162,23 @@
                    	    self.input.val("");
                    	}
                 }
-
+                
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
-
+                
+                _pasteMetaKeyPressed = e.metaKey;
                 self.lastKey = e.which;
             });
 
+            this.input.keyup(function(e){
+
+                if (_pasteMetaKeyPressed && (e.which == 91 || e.which == 86))
+                   $(this).blur();
+                
+                // timeout for the fast copy pasters
+                window.setTimeout(function() {_pasteMetaKeyPressed = e.metaKey;}, 250);
+            });
+                
             //setup blur handler
             this.input.blur(function(e) {
                 self.currentLabel = $(this).val();
@@ -224,46 +248,77 @@
             }
             if (this.options.select)
                 this._popSelect(label, value);
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'popped', null);
         }
         ,
 
         _addTag: function(label, value) {
             this.input.val("");
+            
+            if (this._splitAt && label.search(this._splitAt) > 0){
+                var result = label.split(this._splitAt);
+                for (var i = 0; i < result.length; i++)
+                    this._addTag(result[i], value );
+                return;
+            }
+
             label = label.replace(/,+$/, "");
             label = label.trim();
-            if (label == "" || this._exists(label, value))
+            if (label == "")
                 return false;
 
+            if (this._exists(label, value)){
+                this._highlightExisting();
+                return false;
+            }
+
+
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.input.val("");
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'added', tag);
             return true;
         }
         ,
 
         _exists: function(label, value) {
-        	if (this.tagsArray.length == 0) {
+        	if (this.tagsArray.length == 0)
         		return false;
-        	}
     		
         	if (value === undefined) {
+                this._existingAtIndex = 0;
         		for(var ind in this.tagsArray) {
-    				if (label == this.tagsArray[ind] || label == this.tagsArray[ind].label)
+    				if (this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
     					return true;
+                    this._existingAtIndex++;
     			}
         	} else {
+                this._existingAtIndex = 0;
     			for(var ind in this.tagsArray) {
-    				if (value == this.tagsArray[ind].value)
+    				if (this._lowerIfCaseInsensitive(value) == this._lowerIfCaseInsensitive(this.tagsArray[ind].value))
     					return true;
+                    this._existingAtIndex++;
     			}
     		}
+            this._existingAtIndex = -1;
             return false;
+        }
+        ,
+
+        _highlightExisting: function(){
+            if (this.options.highlightOnExistColor === undefined)
+                return;
+            var duplicate = $($(this.element).children(".tagit-choice")[this._existingAtIndex]);
+            var before = duplicate.css('background-color');
+            duplicate.css('background-color', this.options.highlightOnExistColor).animate({'background-color': before}, 700);
         }
         ,
 
@@ -303,6 +358,11 @@
 
         _initialTags: function() {
             var input = this;
+            var _temp;
+            if (this.options.tagsChanged)
+                _temp = this.options.tagsChanged;
+            this.options.tagsChanged = null;
+
             if (this.options.initialTags.length != 0) {
                 $(this.options.initialTags).each(function(i, element){
                 	if (typeof (element) == "object")
@@ -311,9 +371,19 @@
                 		input._addTag(element);
                 });
             }
+            this.options.tagsChanged = _temp;
         }
         ,
 
+        _lowerIfCaseInsensitive: function (inp) {
+            if (inp === undefined)
+                return inp;
+
+            if (this.options.caseSensitive)
+                return inp;
+            return inp.toLowerCase();
+        }
+        ,
         tags: function() {
             return this.tagsArray;
         }
@@ -333,6 +403,8 @@
         		this.select.change();
         	}
         	this._initialTags();
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(null, 'reseted', null);
         }
         ,
         
@@ -352,18 +424,29 @@
         
         add: function(label, value) {
             label = label.replace(/,+$/, "");
+
+            if (this._splitAt && label.search(this._splitAt) > 0){
+                var result = label.split(this._splitAt);
+                for (var i = 0; i < result.length; i++)
+                    this.add(result[i], value );
+                return;
+            }
+
             label = label.trim();
             if (label == "" || this._exists(label, value))
                 return false;
 
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
+            if (this.options.tagsChanged)
+                this.options.tagsChanged(label, 'added', tag);
+
             return true;
         }
 
