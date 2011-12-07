@@ -59,9 +59,9 @@
             tagsChanged:            function(tagValue, action, element) {;}
         },
 
-        _splitAt: /\ |,/g,
-        _cntrlPressed: false,
-        _existingAtIndex: 0,
+        _splitAt:               /\ |,/g,
+        _existingAtIndex:       0,
+        _pasteMetaKeyPressed:   false,
         _keys: {
             backspace: [8],
             enter:     [13],
@@ -163,20 +163,20 @@
                    	}
                 }
                 
-                _cntrlPressed = e.ctrlKey;
-
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
-
+                
+                _pasteMetaKeyPressed = e.metaKey;
                 self.lastKey = e.which;
             });
 
             this.input.keyup(function(e){
-                if (_cntrlPressed && e.which == 86)
+
+                if (_pasteMetaKeyPressed && (e.which == 91 || e.which == 86))
                    $(this).blur();
                 
                 // timeout for the fast copy pasters
-                window.setTimeout(function() {_cntrlPressed = e.ctrlKey;}, 250);
+                window.setTimeout(function() {_pasteMetaKeyPressed = e.metaKey;}, 250);
             });
                 
             //setup blur handler
@@ -275,16 +275,16 @@
 
 
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.input.val("");
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(label, 'added', $(tag));
+                this.options.tagsChanged(label, 'added', tag);
             return true;
         }
         ,
@@ -437,15 +437,15 @@
                 return false;
 
             var tag = "";
-            tag = '<li class="tagit-choice"'
+            tag = $('<li class="tagit-choice"'
             	+ (value !== undefined ? ' tagValue="' + value + '"' : '')
-            	+ '>' + label + '<a class="tagit-close">x</a></li>';
-            $(tag).insertBefore(this.input.parent());
+            	+ '>' + label + '<a class="tagit-close">x</a></li>');
+            tag.insertBefore(this.input.parent());
             this.tagsArray.push(value === undefined ? label : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(label, 'added', $(tag));
+                this.options.tagsChanged(label, 'added', tag);
 
             return true;
         }
