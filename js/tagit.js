@@ -265,6 +265,7 @@
 
             label = label.replace(/,+$/, "");
             label = label.trim();
+            
             if (label == "")
                 return false;
 
@@ -272,7 +273,6 @@
                 this._highlightExisting();
                 return false;
             }
-
 
             var tag = "";
             tag = $('<li class="tagit-choice"'
@@ -296,14 +296,14 @@
         	if (value === undefined) {
                 this._existingAtIndex = 0;
         		for(var ind in this.tagsArray) {
-    				if (this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
+    				if (this._lowerIfCaseInsensitive(label) === this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) === this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
     					return true;
                     this._existingAtIndex++;
     			}
         	} else {
                 this._existingAtIndex = 0;
     			for(var ind in this.tagsArray) {
-    				if (this._lowerIfCaseInsensitive(value) == this._lowerIfCaseInsensitive(this.tagsArray[ind].value))
+    				if (this._lowerIfCaseInsensitive(value) === this._lowerIfCaseInsensitive(this.tagsArray[ind].value))
     					return true;
                     this._existingAtIndex++;
     			}
@@ -378,12 +378,15 @@
         ,
 
         _lowerIfCaseInsensitive: function (inp) {
-            if (inp === undefined)
+
+            if (inp === undefined || typeof(inp) != typeof("a") )
                 return inp;
 
             if (this.options.caseSensitive)
                 return inp;
+
             return inp.toLowerCase();
+           
         }
         ,
         tags: function() {
