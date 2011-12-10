@@ -295,9 +295,12 @@
     		
         	if (value === undefined) {
                 this._existingAtIndex = 0;
-        		for(var ind in this.tagsArray) {
-    				if (this._lowerIfCaseInsensitive(label) === this._lowerIfCaseInsensitive(this.tagsArray[ind]) || this._lowerIfCaseInsensitive(label) === this._lowerIfCaseInsensitive(this.tagsArray[ind].label))
-    					return true;
+                
+                for(var ind in this.tagsArray) {
+                    var _label = (typeof this.tagsArray[ind] == "string") ? this.tagsArray[ind] : this.tagsArray[ind].label;
+                    
+                    if (this._lowerIfCaseInsensitive(label) == this._lowerIfCaseInsensitive(_label))
+                        return true;
                     this._existingAtIndex++;
     			}
         	} else {
