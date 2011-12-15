@@ -280,7 +280,7 @@
             	+ '>' + label + '<a class="tagit-close">x</a></li>');
             tag.insertBefore(this.input.parent());
             this.input.val("");
-            this.tagsArray.push(value === undefined ? label : {label: label, value: value});
+            this.tagsArray.push(value === undefined ? {label: label, value: label} : {label: label, value: value});
             if (this.options.select)
                 this._addSelect(label, value);
             if (this.options.tagsChanged)
