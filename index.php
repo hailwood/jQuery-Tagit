@@ -219,7 +219,7 @@
                    <td>int</td>
                    <td><em>unlimited</em></td>
                    <td class="left">
-                     The maximum allowable length of a tab.<br/>
+                     The maximum allowable length of a tag.<br/>
                      If omitted, tags of unlimited length are allowed.
                    </td>
                  </tr>
