@@ -40,6 +40,10 @@
  * * Number 06
  * * Feature: added fill method
  * * Name: Shawn Wildermuth <wildermuth.com>
+ * --
+ * * Number 07
+ * * Feature: added maxLength and maxTags options
+ * * Name: Jeff Shantz <jeffshantz.com>
  */
 
 (function($) {
@@ -155,14 +159,18 @@
 
                 if (self._isInitKey(e.which)) {
                     e.preventDefault();
-                    if (self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
+                    if (!self.options.allowNewTags || (self.options.maxTags !== undefined && self.tagsArray.length == self.options.maxTags)) { 
+                      self.input.val("");
+                    }
+                    else if (self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
                         self._addTag($(this).val());
                    	} 
-                   	else if (!self.options.allowNewTags){
-                   	    self.input.val("");
-                   	}
                 }
                 
+                if (self.options.maxLength !== undefined && self.input.val().length == self.options.maxLength) {
+                  e.preventDefault();
+                }
+
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
                 
