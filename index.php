@@ -42,6 +42,7 @@
             $('#demo2').tagit({tagSource: availableTags});
             $('#demo3').tagit({tagSource: availableTags, triggerKeys: ['enter', 'comma', 'tab']});
             $('#demo4').tagit({tagSource: availableTags, tagsChanged: function(a,b){$('#demo4Out').html(a + ' was ' + b); } });
+            $('#demo5').tagit({maxLength: 5, maxTags: 5 });
 
 
             $('#demo1GetTags').click(function(){showTags($('#demo1').tagit('tags'))});
@@ -49,6 +50,7 @@
             $('#demo2ResetTags').click(function(){$('#demo2').tagit('reset')});
             $('#demo3GetTags').click(function(){showTags($('#demo3').tagit('tags'))});
             $('#demo4GetTags').click(function(){showTags($('#demo4').tagit('tags'))});
+            $('#demo5GetTags').click(function(){showTags($('#demo5').tagit('tags'))});
 
             function showTags(tags){
                 var string = "Tags\r\n";
@@ -211,7 +213,26 @@
                     If null, the highlight effect is turned off.
                 </td>
               </tr>  
-              
+            
+              <tr class="odd">
+                   <td>maxLength</td>
+                   <td>int</td>
+                   <td><em>unlimited</em></td>
+                   <td class="left">
+                     The maximum allowable length of a tab.<br/>
+                     If omitted, tags of unlimited length are allowed.
+                   </td>
+                 </tr>
+
+              <tr class="even">
+                   <td>maxTags</td>
+                   <td>int</td>
+                   <td><em>unlimited</em></td>
+                   <td class="left">
+                       The maximum number of tags that the user can enter.<br/>
+                       If omitted, an unlimited number of tags are allowed.
+                   </td>
+                 </tr>              
             </tbody>
         </table>
     </div>
@@ -307,6 +328,16 @@
             <div id="demo4Out">none</div>
             <p>
         </div>
+        
+        <h3>Limits</h3>
+
+        <div class="box">
+            <ul id="demo5"></ul>
+            <div class="buttons">
+                <button id="demo5GetTags" value="Get Tags">Get Tags</button>
+            </div>
+            <p>Maximum of 5 tags and 5 characters per tag.</p>
+        </div>        
     </div>
 
     <h2> </h2>
