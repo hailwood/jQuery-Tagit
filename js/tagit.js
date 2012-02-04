@@ -268,7 +268,7 @@
         ,
 
         _addTag: function(label, value) {
-            this.input.val("");
+            this.input.autocomplete('close').val("");
             
             if (this._splitAt && label.search(this._splitAt) > 0){
                 var result = label.split(this._splitAt);
