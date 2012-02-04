@@ -241,7 +241,13 @@
             } else {
             	var index;
             	if (value === undefined) {
-            		index = $.inArray(label, this.tagsArray);
+            		index = -1;
+                    $.each(this.tagsArray, function (tagIndex, tag) {
+                      if (tag.label == label) {
+                        index = tagIndex;
+                        return false;
+                      }
+                    });
             		index = (index == -1 ? this.tagsArray.length - 1 : index);
             	} else {
             		index = this.tagsArray.length - 1;
