@@ -147,7 +147,8 @@
             		inputBox.attr('tagValue', ui.item.value);
             		return false;
             	}
-            }
+            };
+            this.options.autoFocus = !this.options.allowNewTags;
             this.input.autocomplete(this.options);
             this.options.select = os;
 
