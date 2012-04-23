@@ -217,7 +217,11 @@
         },
 
         _popSelect: function(label, value) {
-        	this.select.children('option[value="' + (value === undefined ? label : value) + '"]').remove();
+            this.select.children().each(function(index) {
+                if($(this).val() == text) {
+                    $(this).remove();
+                }
+            });
             this.select.change();
         }
         ,
