@@ -1,0 +1,44 @@
+This file contains a list of credits/bug fixes that existed before the project 
+was moved to github. The contents of this file were originally in the javascript
+file however have been removed to keep the file as lean as possible. 
+
+*
+ * CHANGELOG:
+ * ---------------------------
+ * 1.1
+ * Fixed bug 01
+ * 1.2
+ * Added select option
+ * * hidden select so tags may be submitted via normal form.
+ * 1.3
+ * Fixed bug 02
+ * 1.4
+ * Fixed bug 03
+ * Fixed bug 04
+ *
+ * ---------------------------
+ * Bug Fix Credits:
+ * --
+ * * Number: 01
+ * * Bug:  Clicking autocomplete option does not add it to the array
+ * * Name: Ed <tastypopsicle.com>
+ * --
+ * * Number: 02
+ * * Bug: Unable to give select a name
+ * * Name: Ed <tastypopsicle.com>
+ * --
+ * * Number 03
+ * * Bug: reference to incorrect variable (tagArray vs tagsArray)
+ * * Name: claudio <unknown>
+ * --
+ * * Number 04
+ * * Bug: console.log() left in code
+ * * Name: claudio <unknown>
+ * --
+ * * Number 06
+ * * Feature: added fill method
+ * * Name: Shawn Wildermuth <wildermuth.com>
+ * --
+ * * Number 07
+ * * Feature: added maxLength and maxTags options
+ * * Name: Jeff Shantz <jeffshantz.com> 
