@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>jQuery Tagit Demo Page</title>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-    <link href="css/demo.css" rel="stylesheet" type="text/css"/>
-    <link href="css/tagit-simple-blue.css" rel="stylesheet" type="text/css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <link href="demo/css/jquery-ui-base-1.8.20.css" rel="stylesheet" type="text/css"/>
+    <link href="demo/css/demo.css" rel="stylesheet" type="text/css"/>
+    <link href="css/tagit-<?php echo $color; ?>.css" rel="stylesheet" type="text/css"/>
+    <script src="demo/js/jquery.1.7.2.min.js"></script>
+    <script src="demo/js/jquery-ui.1.8.20.min.js"></script>
     <script src="js/tagit.js"></script>
     <script>
         $(function() {
@@ -52,10 +52,10 @@
             $('#demo5GetTags').click(function(){showTags($('#demo5').tagit('tags'))});
 
             function showTags(tags){
-                var string = "Tags\r\n";
+                var string = "Tags (label : value)\r\n";
                     string +="--------\r\n";
                 for(var i in tags)
-                string += tags[i]+"\r\n";
+                string += tags[i].label+" : "+tags[i].value+"\r\n";
                 alert(string);
             }
 
@@ -337,7 +337,6 @@
     <h2> </h2>
     <div class="box">
         &copy; Content and Design Matthew Hailwood <?php echo Date('Y'); ?><br />
-        &copy; Background Image <a href="http://johnnyblack.org/">johnnyblack.org</a> <?php echo Date('Y'); ?>
     </div>
 
 </div>
