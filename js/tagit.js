@@ -46,7 +46,7 @@
 
             //add any initial tags added through html to the array
             this.element.children('li').each(function() {
-            	var tagValue = $(this).attr('tagValue');
+            	var tagValue = $(this).attr('tagValue') || $(this).data('value');
                 self.options.initialTags.push(
                 	tagValue ? {label: $(this).text(), value: tagValue} : $(this).text()
                 );
@@ -169,7 +169,9 @@
             };
 
             if (this.options.select) {
-                this.element.after('<select class="tagit-hiddenSelect" name="'+this.element.attr('name')+'" multiple="multiple"></select>');
+                this.element.after('<select class="tagit-hiddenSelect" name="'+
+                    (this.element.attr('name') || this.element.data('name'))+
+                    '" multiple="multiple"></select>');
                 this.select = this.element.next('.tagit-hiddenSelect');
             }
             this._initialTags();
