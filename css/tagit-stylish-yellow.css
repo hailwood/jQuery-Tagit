@@ -64,6 +64,13 @@ ul.tagit li {
     position: relative;
 }
 
+ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
+    float: left;
+    width: 12px;
+    margin-left: -5px;
+    cursor: move;
+}
+
 ul.tagit li.tagit-choice {
     background: #FFF5BB;
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.32,#FFF5BB),color-stop(0.66,#FDF2B1),color-stop(0.83, #FCEE9B));
@@ -73,6 +80,7 @@ ul.tagit li.tagit-choice {
     border-bottom-left-radius: 6px;
     border-top-right-radius: 6px;
     padding: 2px 15px 3px 4px;
+    cursor: default;
 }
 
 ul.tagit li.tagit-choice.selected {

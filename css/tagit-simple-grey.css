@@ -66,6 +66,13 @@ ul.tagit li {
     position: relative;
 }
 
+ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
+    float: left;
+    width: 12px;
+    margin-left: -5px;
+    cursor: move;
+}
+
 ul.tagit li.tagit-choice {
     background-color: #f7f7f7;
     border: 1px solid #f2f2f2;

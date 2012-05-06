@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 <head>
-    <title>jQuery Tagit Demo Page</title>
+    <title>jQuery Tagit Demo Page (HTML)</title>
     <link href="demo/css/jquery-ui-base-1.8.20.css" rel="stylesheet" type="text/css"/>
     <link href="demo/css/demo.css" rel="stylesheet" type="text/css"/>
-    <link href="css/tagit-<?php echo $color; ?>.css" rel="stylesheet" type="text/css"/>
+    <link href="css/tagit-stylish-yellow.css" rel="stylesheet" type="text/css"/>
     <script src="demo/js/jquery.1.7.2.min.js"></script>
     <script src="demo/js/jquery-ui.1.8.20.min.js"></script>
     <script src="js/tagit.js"></script>
@@ -36,28 +36,51 @@
                 "Scheme"
             ];
 
-            $('#demo1').tagit({tagSource: availableTags, select: true});
-            $('#demo2').tagit({tagSource: availableTags});
-            $('#demo3').tagit({tagSource: availableTags, triggerKeys: ['enter', 'comma', 'tab']});
-            $('#demo4').tagit({tagSource: availableTags, tagsChanged: function(a,b){$('#demo4Out').html(a + ' was ' + b); } });
-            $('#demo5').tagit({maxLength: 5, maxTags: 5 });
+            $('#demo1').tagit({tagSource:availableTags, select:true, sortable:true});
+            $('#demo2').tagit({tagSource:availableTags});
+            $('#demo3').tagit({tagSource:availableTags, triggerKeys:['enter', 'comma', 'tab']});
+            $('#demo4').tagit({tagSource:availableTags, sortable:true, tagsChanged:function (a, b) {
+                $('#demo4Out').html(a + ' was ' + b);
+            } });
+            $('#demo5').tagit({maxLength:5, maxTags:5 });
+            $('#demo6').tagit({tagSource:availableTags, sortable:true});
+            $('#demo7').tagit({tagSource:availableTags, sortable:'handle'});
 
 
-            $('#demo1GetTags').click(function(){showTags($('#demo1').tagit('tags'))});
-            $('#demo2GetTags').click(function(){showTags($('#demo2').tagit('tags'))});
-            $('#demo2ResetTags').click(function(){$('#demo2').tagit('reset')});
+            $('#demo1GetTags').click(function () {
+                showTags($('#demo1').tagit('tags'))
+            });
+            $('#demo2GetTags').click(function () {
+                showTags($('#demo2').tagit('tags'))
+            });
+            $('#demo2ResetTags').click(function () {
+                $('#demo2').tagit('reset')
+            });
+            $('#demo3GetTags').click(function () {
+                showTags($('#demo3').tagit('tags'))
+            });
+            $('#demo4GetTags').click(function () {
+                showTags($('#demo4').tagit('tags'))
+            });
+            $('#demo5GetTags').click(function () {
+                showTags($('#demo5').tagit('tags'))
+            });
+            $('#demo6GetTags').click(function () {
+                showTags($('#demo6').tagit('tags'))
+            });
+            $('#demo7GetTags').click(function () {
+                showTags($('#demo7').tagit('tags'))
+            });
 
-            $('#demo3GetTags').click(function(){showTags($('#demo3').tagit('tags'))});
-            $('#demo4GetTags').click(function(){showTags($('#demo4').tagit('tags'))});
-            $('#demo5GetTags').click(function(){showTags($('#demo5').tagit('tags'))});
-
-            function showTags(tags){
+            function showTags(tags) {
+                console.log(tags);
                 var string = "Tags (label : value)\r\n";
-                    string +="--------\r\n";
-                for(var i in tags)
-                string += tags[i].label+" : "+tags[i].value+"\r\n";
+                string += "--------\r\n";
+                for (var i in tags)
+                    string += tags[i].label + " : " + tags[i].value + "\r\n";
                 alert(string);
             }
+
 
             $('.browser').hover(
                 function(){$(this).children('a').children('div').show('fast');},
@@ -106,12 +129,15 @@
             <li>Fully integrated with jQuery ui auto complete</li>
             <li>Automatically adds current input as tag if input loses focus</li>
             <li>Easy to use public methods</li>
-            <li>Easy to theme e.g.(<a href="?theme=simple-green#demos">Simple Green</a> <a href="?theme=simple-blue#demos">Simple Blue</a> <a href="?theme=simple-grey#demos">Simple Grey</a>)</li>
+            <li>Easy to theme e.g.(<a href="?theme=simple-green#demos">Simple Green</a> <a href="?theme=simple-blue#demos">Simple
+                Blue</a> <a href="?theme=simple-grey#demos">Simple Grey</a>)
+            </li>
             <li>Customizable <em>accept</em> keys</li>
             <li>Backspace on empty input deletes previous tag</li>
             <li>Ability to provide <em>initial tags</em> on creation through options</li>
             <li>Ability to provide <em>initial tags</em> on creation via list items</li>
             <li>Option to toggle usage of a hidden select so the tags can be sent using a normal form!</li>
+            <li>Ability to re-arrange tags by drag and drop!</li>
         </ul>
     </div>
 
@@ -120,13 +146,13 @@
     <div class="box">
         <div class="code">
             <div class="wrap">
-    &lt;<span class="blue">script</span>&gt;
-    $(<span class="blue">function</span>(){
-        $(<span class="green">'#tags'</span>).tagit();
-    });
-    &lt;/<span class="blue">script</span>&gt;
+                &lt;<span class="blue">script</span>&gt;
+                $(<span class="blue">function</span>(){
+                $(<span class="green">'#tags'</span>).tagit();
+                });
+                &lt;/<span class="blue">script</span>&gt;
 
-    &lt;<span class="blue">ul id=</span><span class="green">&quot;tags&quot;</span>&gt;&lt;/<span class="blue">ul</span>&gt;
+                &lt;<span class="blue">ul id=</span><span class="green">&quot;tags&quot;</span>&gt;&lt;/<span class="blue">ul</span>&gt;
             </div>
         </div>
         <div class="note">Seriously, Can you beat that?</div>
@@ -171,69 +197,84 @@
 
             <tr class="even">
                 <td>minLength</td>
-                <td>int</td>
+                <td>Int</td>
                 <td>1</td>
                 <td class="left">The minimum length before a triggerKey will create a tag</td>
             </tr>
 
             <tr class="odd">
                 <td>select</td>
-                <td>bool</td>
+                <td>Bool</td>
                 <td>false</td>
-                <td class="left">Maintain a hidden select in place for form submissions<br />
-                    To name the select simply give your UL a name attribute!</td>
+                <td class="left">Maintain a hidden select in place for form submissions<br/>
+                    To name the select simply give your UL a name attribute!
+                    <hr/>
+                    Don't forget
+                    to include &#91; and &#93; if your language (e.g. PHP) requires them!
+                </td>
             </tr>
 
             <tr class="even">
                 <td>tagsChanged</td>
-                <td>method</td>
+                <td>Callback</td>
                 <td>function(tagValue, action, element)</td>
                 <td class="left">Callback on changed tags:<br>
-                <b>tagValue:</b> string<br>
-                <b>action:</b> string - either 'added', 'popped' or 'resetted'<br>
-                <b>element:</b> object - reference to the added LI element</td>
+                    <b>tagValue:</b> string<br>
+                    <b>action:</b> string - either 'added', 'popped', 'moved' or 'reset'<br>
+                    <b>element:</b> object - reference to the added LI element
+                </td>
             </tr>
 
-           <tr class="odd">
+            <tr class="odd">
                 <td>caseSensitive</td>
-                <td>bool</td>
+                <td>Bool</td>
                 <td>false</td>
                 <td class="left">
-                  The check for existing tags is case sensitive.<br />
-                  If set to <i>false</i> the words "Foo" and "foo" are considered the same.
+                    The check for existing tags is case sensitive. If false the words "Foo" and "foo" considered the same
                 </td>
-              </tr>
+            </tr>
 
-           <tr class="even">
+            <tr class="even">
                 <td>highlightOnExistColor</td>
-                <td>string</td>
+                <td>String</td>
                 <td>#0F0</td>
                 <td class="left">
-                    If the user tries to add a tag, that already exists, the existing tag will run a highlight effect using the defined background color.
+                    If the user tries to add a tag, that already exists, the existing tag will run a highlight effect using
+                    the defined background color.
                     If null, the highlight effect is turned off.
                 </td>
-              </tr>              
+            </tr>
 
-           <tr class="odd">
+            <tr class="odd">
                 <td>maxLength</td>
-                <td>int</td>
+                <td>Int</td>
                 <td><em>unlimited</em></td>
                 <td class="left">
-                  The maximum allowable length of a tag.<br/>
-                  If omitted, tags of unlimited length are allowed.
+                    The maximum allowable length of a tag.<br/>
+                    If omitted, tags of unlimited length are allowed.
                 </td>
-              </tr>
+            </tr>
 
-           <tr class="even">
+            <tr class="even">
                 <td>maxTags</td>
-                <td>int</td>
+                <td>Int</td>
                 <td><em>unlimited</em></td>
                 <td class="left">
                     The maximum number of tags that the user can enter.<br/>
                     If omitted, an unlimited number of tags are allowed.
                 </td>
-              </tr>              
+            </tr>
 
+            <tr class="odd">
+                <td>sortable</td>
+                <td>Bool, String</td>
+                <td><em>false</em></td>
+                <td class="left">
+                    Allows the user to re-order the tags using drag and drop.<br/>
+                    If true the whole tag is draggable, if 'handle' a handle is <br/>
+                    rendered and the tag is only draggable using the handle.
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -259,13 +300,25 @@
             <tr class="even">
                 <td>.tagit("tags")</td>
                 <td>Array</td>
-                <td class="left">Returns an array of all tags</td>
+                <td class="left">Returns an array of objects about all the tags.</td>
             </tr>
 
             <tr class="odd">
                 <td>.tagit("reset")</td>
                 <td>null</td>
                 <td class="left">Resets the tags list to the initial value</td>
+            </tr>
+
+            <tr class="even">
+                <td>.tagit("fill", [{label: 'tag', value: 12}, {label: 'stuff', value: 13}])</td>
+                <td>null</td>
+                <td class="left">Empties the tags and fills the plugin with the provided tags.</td>
+            </tr>
+
+            <tr class="odd">
+                <td>.tagit("add", {label: 'tag', value: 12})</td>
+                <td>Bool</td>
+                <td class="left">Adds a tag to the plugin.</td>
             </tr>
 
             </tbody>
@@ -332,11 +385,41 @@
             </div>
             <p>Maximum of 5 tags and 5 characters per tag.</p>
         </div>
+
+        <h3>Sortable : true</h3>
+
+        <div class="box">
+            <ul id="demo6" name="demo6">
+                <li>here</li>
+                <li>are</li>
+                <li>some</li>
+                <li>initial</li>
+                <li>tags</li>
+            </ul>
+            <div class="buttons">
+                <button id="demo6GetTags" value="Get Tags">Get Tags</button>
+            </div>
+        </div>
+
+        <h3>Sortable : handle</h3>
+
+        <div class="box">
+            <ul id="demo7" name="demo7">
+                <li>here</li>
+                <li>are</li>
+                <li>some</li>
+                <li>initial</li>
+                <li>tags</li>
+            </ul>
+            <div class="buttons">
+                <button id="demo7GetTags" value="Get Tags">Get Tags</button>
+            </div>
+        </div>
     </div>
 
     <h2> </h2>
     <div class="box">
-        &copy; Content and Design Matthew Hailwood <?php echo Date('Y'); ?><br />
+        &copy; Content and Design Matthew Hailwood 2012<br />
     </div>
 
 </div>
