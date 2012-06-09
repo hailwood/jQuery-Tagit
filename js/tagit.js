@@ -11,16 +11,31 @@
 
         // default options
         options:{
+            //Maps directly to the jQuery-ui Autocomplete option
             tagSource:[],
+            //What keys should trigger the completion of a tag
             triggerKeys:['enter', 'space', 'comma', 'tab'],
+            //array method for setting initial tags
             initialTags:[],
+            //minimum length of tags
             minLength:1,
+            //should an html select be rendered to allow for normal form submission
             select:false,
+            //if false only tags from `tagSource` are able to be entered
             allowNewTags:true,
+            //should tag and Tag be treated as identical
             caseSensitive:false,
+            //should tags be drag-and-drop sortable?
+                //true: entire tag is draggable
+                //'handle': a handle is rendered which is draggable
             sortable:false,
+            //color to highlight text when a duplicate tag is entered
             highlightOnExistColor:'#0F0',
-            emptySearch:true, // empty search on focus
+            //empty search on focus
+            emptySearch:true,
+            //callback function for when tags are changed
+                //tagValue: value of tag that was changed
+                //action e.g. removed, added, sorted
             tagsChanged:function (tagValue, action, element) {
                 ;
             }
@@ -96,6 +111,7 @@
             this.options.appendTo = this.element;
             this.options.source = this.options.tagSource;
             this.options.select = function (event, ui) {
+                self.input.data('autoCompleteTag', true);
                 clearTimeout(self.timer);
                 if (ui.item.label === undefined)
                     self._addTag(ui.item.value);
@@ -121,8 +137,11 @@
                 if (e.which == self._keys.backspace)
                     return self._backspace(lastLi);
 
-                if (self._isInitKey(e.which)) {
+                if (self._isInitKey(e.which) && !(self._isTabKey(e.which) && this.value == '' && !self.input.data('autoCompleteTag'))) {
                     e.preventDefault();
+
+                    self.input.data('autoCompleteTag', false);
+
                     if (!self.options.allowNewTags || (self.options.maxTags !== undefined && self.tagsArray.length == self.options.maxTags)) {
                         self.input.val("");
                     }
@@ -322,6 +341,11 @@
             if ($.inArray(keyName, this.options.triggerKeys) != -1)
                 return true;
             return false;
+        },
+
+        _isTabKey:function (keyCode) {
+          var tabKeys = this._keys['tab'];
+          return $.inArray(keyCode, tabKeys) > -1;
         },
 
         _removeTag:function () {
