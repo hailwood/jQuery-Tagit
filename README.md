@@ -20,6 +20,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
 * Ability to provide _initial tags_ on creation via list items
 * Option to toggle usage of a hidden select so the tags can be sent using a normal form!
 * Ability to re-arrange tags by drag and drop!
+* Optional ThemeRoller compatibility!
 
 ## <a id="options" href="#options">Options</a>
 <table>
@@ -48,6 +49,13 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>An array containing all or any of the default options.<br/>
           These are the keys that will trigger a tag completion
       </td>
+    </tr>
+
+    <tr>
+    	<td>allowNewTags</td>
+    	<td>Bool</td>
+    	<td>true</td>
+    	td>Allow tags that do not exist in tagSource to be entered?</td>
     </tr>
 
     <tr>
