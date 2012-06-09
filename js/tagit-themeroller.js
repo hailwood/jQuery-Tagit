@@ -96,6 +96,7 @@
             this.options.appendTo = this.element;
             this.options.source = this.options.tagSource;
             this.options.select = function (event, ui) {
+                self.input.data('autoCompleteTag', true);
                 clearTimeout(self.timer);
                 if (ui.item.label === undefined)
                     self._addTag(ui.item.value);
@@ -121,8 +122,11 @@
                 if (e.which == self._keys.backspace)
                     return self._backspace(lastLi);
 
-                if (self._isInitKey(e.which)) {
+                if (self._isInitKey(e.which) && !(self._isTabKey(e.which) && this.value == '' && !self.input.data('autoCompleteTag'))) {
                     e.preventDefault();
+
+                    self.input.data('autoCompleteTag', false);
+
                     if (!self.options.allowNewTags || (self.options.maxTags !== undefined && self.tagsArray.length == self.options.maxTags)) {
                         self.input.val("");
                     }
@@ -323,6 +327,11 @@
             if ($.inArray(keyName, this.options.triggerKeys) != -1)
                 return true;
             return false;
+        },
+
+        _isTabKey:function (keyCode) {
+          var tabKeys = this._keys['tab'];
+          return $.inArray(keyCode, tabKeys) > -1;
         },
 
         _removeTag:function () {
