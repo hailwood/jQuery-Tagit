@@ -1,17 +1,37 @@
 <!doctype html>
 <html>
 <head>
-  <title>jQuery Tagit Demo Page (HTML)</title>
+  <title>jQuery Tagit Demo Page (HTML/ThemeRoller)</title>
   <script src="demo/js/jquery.1.7.2.min.js"></script>
   <script src="demo/js/jquery-ui.1.8.20.min.js"></script>
-  <script src="js/tagit.js"></script>
-
-  <link href="demo/css/demo.css" rel="stylesheet" type="text/css"/>
-  <link rel="stylesheet" type="text/css" href="demo/css/jquery-ui-base-1.8.20.css">
-  <link rel="stylesheet" type="text/css" href="css/tagit-stylish-yellow.css">
+  <link rel="stylesheet" type="text/css" href="demo/css/demo.css">
+  <script src="js/tagit-themeroller.js"></script>
+  <script src="demo/themeswitcher/jquery.themeswitcher.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/themeroller/tagit.css">
+  <link rel="stylesheet" type="text/css" href="css/themeroller/bootstrap/Bootstrap.css">
 
   <script>
 	$(function () {
+
+	  $('#switcher').themeswitcher({
+		imgpath:'demo/themeswitcher/images/',
+		additionalThemes:[
+		  {
+			title:'Aristo',
+			name:'aristo',
+			icon:'theme_90_aristo.png',
+			url:'css/themeroller/aristo/Aristo.css'
+		  },
+		  {
+			title:'Twitter Bootstrap',
+			name:'bootstrap',
+			icon:'theme_90_aristo.png',
+			url:'css/themeroller/bootstrap/Bootstrap.css'
+		  }
+		],
+		loadTheme:'Bootstrap'
+	  });
+
 	  var availableTags = [
 		"ActionScript",
 		"AppleScript",
@@ -95,13 +115,7 @@
 <body>
 <div id="wrap">
 <div id="switcher_parent">
-  <div id="switcher" class="notr">
-	<a href="index.themeroller.html">
-	  Tried Tagit with ThemeRoller?<br/>
-	  <img class="tr"
-		   src="http://www.filamentgroup.com/examples/RollAUI/images/themeroller_ready_white_400px.gif"/>
-	</a>
-  </div>
+  <div id="switcher"></div>
 </div>
 <h1>jQuery Tagit Demo Page</h1>
 
@@ -152,14 +166,14 @@
 	<li>Fully integrated with jQuery ui auto complete</li>
 	<li>Automatically adds current input as tag if input loses focus</li>
 	<li>Easy to use public methods</li>
-	<li>Easy to theme (See the css folder)</li>
+	<li>Easy to theme e.g.(See the css folder)</li>
 	<li>Customizable <em>accept</em> keys</li>
 	<li>Backspace on empty input deletes previous tag</li>
 	<li>Ability to provide <em>initial tags</em> on creation through options</li>
 	<li>Ability to provide <em>initial tags</em> on creation via list items</li>
 	<li>Option to toggle usage of a hidden select so the tags can be sent using a normal form!</li>
 	<li>Ability to re-arrange tags by drag and drop!</li>
-	<li><a href="index.themeroller.html">Optional ThemeRoller compatibility!</a></li>
+	<li>Optional ThemeRoller compatibility!</li>
   </ul>
 </div>
 
@@ -340,6 +354,7 @@
 </table>
 
 <h2><a name="demos">Demos</a></h2>
+
 <h3>Hidden Select</h3>
 
 <div class="box">
