@@ -49,3 +49,21 @@ ul.tagit.ui-widget li.tagit-new input[type="text"].tagit-input:focus{
 	border-radius: 0;
 	box-shadow: none;
 }
+
+ul.ui-autocomplete.custom-ac{
+	width: 760px;
+}
+
+ul.ui-autocomplete li.ui-menu-item.ac-item{
+	float: left;
+	width: 253px;
+	clear: none;
+}
+
+ul.ui-autocomplete li.ui-menu-item.ac-item div.ui-widget-content{
+	font-size: 85%;
+	height: 80px;
+	overflow: auto;
+	padding: 3px;
+
+}

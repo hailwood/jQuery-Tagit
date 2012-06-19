@@ -26,16 +26,16 @@
             //should tag and Tag be treated as identical
             caseSensitive:false,
             //should tags be drag-and-drop sortable?
-                //true: entire tag is draggable
-                //'handle': a handle is rendered which is draggable
+            //true: entire tag is draggable
+            //'handle': a handle is rendered which is draggable
             sortable:false,
             //color to highlight text when a duplicate tag is entered
             highlightOnExistColor:'#0F0',
             //empty search on focus
             emptySearch:true,
             //callback function for when tags are changed
-                //tagValue: value of tag that was changed
-                //action e.g. removed, added, sorted
+            //tagValue: value of tag that was changed
+            //action e.g. removed, added, sorted
             tagsChanged:function (tagValue, action, element) {
                 ;
             }
@@ -344,8 +344,8 @@
         },
 
         _isTabKey:function (keyCode) {
-          var tabKeys = this._keys['tab'];
-          return $.inArray(keyCode, tabKeys) > -1;
+            var tabKeys = this._keys['tab'];
+            return $.inArray(keyCode, tabKeys) > -1;
         },
 
         _removeTag:function () {
@@ -440,6 +440,10 @@
                 return this._addTag({label: label, value: value});
             else
                 return this._addTag(label, value);
+        },
+
+        autocomplete: function(){
+            return this.input.data("autocomplete");
         },
 
         tag:function (label, value, element) {

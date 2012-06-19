@@ -11,6 +11,7 @@
   <link rel="stylesheet" type="text/css" href="css/tagit-stylish-yellow.css">
 
   <script>
+
 	$(function () {
 	  var availableTags = [
 		"ActionScript",
@@ -89,10 +90,19 @@
 		function () {
 		  $(this).children('a').children('div').hide('fast');
 		});
+
+	  setInterval("$('#fork').effect('pulsate', { times:1 }, 500);", 5000);
+
+
 	});
   </script>
 </head>
 <body>
+<a id="fork" href="https://github.com/hailwood/jQuery-Tagit">
+  <img style="position: fixed; top: 0; left: 0; border: 0;"
+	   src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub">
+</a>
+
 <div id="wrap">
 <div id="switcher_parent">
   <div id="switcher" class="notr">
@@ -340,6 +350,7 @@
 </table>
 
 <h2><a name="demos">Demos</a></h2>
+
 <h3>Hidden Select</h3>
 
 <div class="box">
@@ -452,6 +463,22 @@
   </ul>
   <div class="buttons">
 	<button id="demo7GetTags" value="Get Tags">Get Tags</button>
+  </div>
+</div>
+
+<h3>Custom Autocomplete</h3>
+
+<div class="box">
+  <div class="note">
+	You can hack into the autocomplete dropdown to display custom data!
+  </div>
+
+  <div class="note">
+	While this demo could be done using either the <a href="index.themeroller.html">themeroller</a> or normal version
+	for simplicities sake we have only created this particular demo using <a
+	href="index.themeroller.html">themeroller</a>.
+	<hr/>
+	Please <a href="index.themeroller.html#demo8">Click here to view this demo</a>!
   </div>
 </div>
 

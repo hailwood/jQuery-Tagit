@@ -57,6 +57,141 @@
 		"Scheme"
 	  ];
 
+	  var availableTagsCustom = [
+		{
+		  label:'ActionScript',
+		  value:'actionscript',
+		  desc:'ActionScript is a scripting language used for RIAs, mobiles applications, web applications, etc.',
+		  count:5496
+		},
+		{
+		  label:'AppleScript',
+		  value:'applescript',
+		  desc:'AppleScript is the Mac OS scripting language.',
+		  count:1502
+		},
+		{
+		  label:'Asp',
+		  value:'asp',
+		  desc:'Active Server Pages (ASP), also known as Classic ASP or ASP Classic, was Microsoft&#39;s first server-side script-engine for dynamically-generated web pages. The introduction of ASP.NET led to use of the term Classic ASP for the original technology.',
+		  count:4359
+		},
+		{
+		  label:'BASIC',
+		  value:'basic',
+		  desc:'BASIC (Beginner’s All-purpose Symbolic Instruction Code) is a family of high-level programming languages designed to be easy to use.',
+		  count:73
+		},
+		{
+		  label:'C',
+		  value:'c',
+		  desc:'C is a general-purpose computer programming language used for operating systems, games and other high performance work and is clearly distinct from C++. It was developed in 1972 by Dennis Ritchie for use with the Unix operating system.',
+		  count:61619
+		},
+		{
+		  label:'C++',
+		  value:'c++',
+		  desc:'A statically typed, free-form, compiled, multi-paradigm, general-purpose programming language widely used by enthusiasts and professionals.',
+		  count:130385
+		},
+		{
+		  label:'Clojure',
+		  value:'clojure',
+		  desc:'Clojure is a modern Lisp dialect. Features include: an emphasis on functional programming (lazy/impure), running on the JVM with transparent access to all Java libraries, an interactive REPL development environment, dynamic runtime polymorphism, Lisp-style macro meta-programming and concurrent programming capabilities supported by software transactional memory. Versions of Clojure are also available for the CLR and Javascript.',
+		  count:3256
+		},
+		{
+		  label:'COBOL',
+		  value:'cobol',
+		  desc:'COBOL (COmmon Business Oriented Language) was the product of a US Department of Defense initiative to develop a standard and portable programming language for business applications. COBOL celebrated its 50th birthday in 2009. It is generally believed that new COBOL development is in decline but a commercial commitment remains to keep the language relevant in today’s computing landscape.',
+		  count:316
+		},
+		{
+		  label:'ColdFusion',
+		  value:'coldfusion',
+		  desc:'ColdFusion is a server-side rapid application development platform, from Adobe. ColdFusion can also refer to CFML, the dynamic programming language which Adobe ColdFusion ("CF") implements, also used by a number of alternative CFML engines - notably Open BlueDragon and Railo.',
+		  count:3986
+		},
+		{
+		  label:'Erlang',
+		  value:'erlang',
+		  desc:'Erlang is a general-purpose programming language and runtime environment, with built-in support for concurrency, distribution and fault tolerance. Erlang is used in several large telecommunication systems from Ericsson. Erlang is open source and available for download on GitHub.',
+		  count:2419
+		},
+		{
+		  label:'Fortran',
+		  value:'fortran',
+		  desc:'Fortran is a general-purpose, procedural, imperative programming language that is especially suited for numeric computation and scientific computing.',
+		  count:1174
+		},
+		{
+		  label:'Groovy',
+		  value:'groovy',
+		  desc:'Groovy is an object-oriented programming language for the Java platform. It is a dynamic language with features similar to those of Python, Ruby, Perl, and Smalltalk. It can be used as a scripting language for the Java Platform.',
+		  count:4237
+		},
+		{
+		  label:'Haskell',
+		  value:'haskell',
+		  desc:'Haskell is an advanced functional programming language, featuring strong static typing, lazy evaluation, and monadic effects.',
+		  count:7096
+		},
+		{
+		  label:'Java',
+		  value:'java',
+		  desc:'Java is an object-oriented language and runtime environment. Java programs can run unchanged on most platforms in a Virtual Machine called the JVM.',
+		  count:256007
+		},
+		{
+		  label:'JavaScript',
+		  value:'javascript',
+		  desc:'JavaScript is a dynamic language commonly used for scripting in web browsers. It is NOT the same as Java. Use this tag for questions regarding ECMAScript and its dialects/implementations (excluding ActionScript and JScript). If a framework or library, such as jQuery, is used, include that tag as well. Questions that don&#39;t include a framework/library tag, such as jQuery, implies that the question requires a pure JavaScript answer.',
+		  count:220246
+		},
+		{
+		  label:'Lisp',
+		  value:'lisp',
+		  desc:'Lisp is a family of programmable programming languages.',
+		  count:1937
+		},
+		{
+		  label:'Perl',
+		  value:'perl',
+		  desc:'Perl is a high-level, general-purpose, interpreted, dynamic programming language.',
+		  count:18684
+		},
+		{
+		  label:'PHP',
+		  value:'php',
+		  desc:'PHP is a widely-used, general-purpose server side scripting language that is especially suited for web development.',
+		  count:235270
+		},
+		{
+		  label:'Python',
+		  value:'python',
+		  desc:'Python is an interpreted, general-purpose high-level programming language whose design philosophy emphasizes code readability.',
+		  count:112811
+		},
+		{
+		  label:'Ruby',
+		  value:'ruby',
+		  desc:'Ruby is an open-source dynamic object-oriented interpreted language created by Yukihiro Matsumoto (Matz) in 1993.',
+		  count:47581
+		},
+		{
+		  label:'Scala',
+		  value:'scala',
+		  desc:'Scala is a general purpose programming language principally targeting the Java Virtual Machine. Designed to express common programming patterns in a concise, elegant, and type-safe way, it fuses both imperative and functional programming styles. Its key features are: statically typed; advanced type-system with type inference; function types; pattern-matching; implicit parameters and conversions; operator overloading; full interoperability with Java.',
+		  count:9380
+		},
+		{
+		  label:'Scheme',
+		  value:'scheme',
+		  desc:'Scheme is a functional programming language in the Lisp family, closely modelled on lambda calculus with eager (applicative-order) evaluation.',
+		  count:1667
+		}
+	  ];
+
 	  $('#demo1').tagit({tagSource:availableTags, select:true, sortable:true});
 	  $('#demo2').tagit({tagSource:availableTags});
 	  $('#demo3').tagit({tagSource:availableTags, triggerKeys:['enter', 'comma', 'tab']});
@@ -66,6 +201,40 @@
 	  $('#demo5').tagit({maxLength:5, maxTags:5 });
 	  $('#demo6').tagit({tagSource:availableTags, sortable:true});
 	  $('#demo7').tagit({tagSource:availableTags, sortable:'handle'});
+	  $('#demo8').tagit({tagSource:function (request, response) {
+		//setup the search to search the label and the description
+		var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+		response($.grep(availableTagsCustom, function (value) {
+		  return matcher.test(value.label) || matcher.test(value.desc);
+		}));
+	  }});
+
+	  //get a reference to the autocomplete object
+	  var ac = $('#demo8').tagit('autocomplete');
+
+	  //add a custom class for themeing
+	  ac.menu.element.addClass('custom-ac');
+
+	  //attach the autocomplete to the bottom left of the tag list
+	  ac.options.position = {    my:"left top", at:"left bottom", collision:"none", of:$('#demo8').data('tagit').element };
+
+	  //overwrite the autocomplete _renderItem function!
+	  ac._renderItem = function (ul, item) {
+
+		//highlight the matching terms
+		var re = new RegExp(this.term, "gi");
+		var label = item.label.replace(re, '<span class="blue">' + "$&" + "</span>");
+		var desc = item.desc.replace(re, '<span class="blue">' + "$&" + "</span>");
+
+		//render the entry
+		var rendered = '<a><div class="ui-widget-header">' + label + ' <span style="font-weight:normal">(used ' + item.count + " times)</span></div>" +
+		  '<div class="ui-widget-content">' + desc + "</div></a>";
+
+		return $('<li class="ac-item ui-corner-all"></li>')
+		  .data("item.autocomplete", item)
+		  .append(rendered)
+		  .appendTo(ul);
+	  };
 
 
 	  $('#demo1GetTags').click(function () {
@@ -92,6 +261,9 @@
 	  $('#demo7GetTags').click(function () {
 		showTags($('#demo7').tagit('tags'))
 	  });
+	  $('#demo8GetTags').click(function () {
+		showTags($('#demo8').tagit('tags'))
+	  });
 
 	  function showTags(tags) {
 		console.log(tags);
@@ -109,10 +281,16 @@
 		function () {
 		  $(this).children('a').children('div').hide('fast');
 		});
+
+	  setInterval("$('#fork').effect('pulsate', { times:1 }, 500);", 5000);
 	});
   </script>
 </head>
 <body>
+<a id="fork" href="https://github.com/hailwood/jQuery-Tagit">
+  <img style="position: fixed; top: 0; left: 0; border: 0;"
+	   src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub">
+</a>
 <div id="wrap">
 <div id="switcher_parent">
   <div id="switcher"></div>
@@ -467,6 +645,18 @@
   </ul>
   <div class="buttons">
 	<button id="demo7GetTags" value="Get Tags">Get Tags</button>
+  </div>
+</div>
+
+<h3>Custom Autocomplete</h3>
+
+<div class="box">
+  <div class="note">
+	You can hack into the autocomplete dropdown to display custom data!
+  </div>
+  <ul id="demo8" name="demo8"></ul>
+  <div class="buttons">
+	<button id="demo8GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 

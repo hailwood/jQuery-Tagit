@@ -67,6 +67,11 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 20px;
 }
 
+.blue {
+	text-decoration:underline;;
+	color:Blue;
+}
+
 .box {
 	padding: 10px;
 	font-size: 12px;
