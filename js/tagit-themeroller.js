@@ -259,7 +259,7 @@
             if (this.options.select)
                 this._popSelect(tag);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(tag.value || tag.label, 'popped', null);
+                this.options.tagsChanged(tag.value || tag.label, 'popped', tag);
             return;
         },
 
