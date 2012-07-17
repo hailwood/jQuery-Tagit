@@ -182,6 +182,12 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>Adds a tag to the plugin.</td>
     </tr>
 
+    <tr>
+      <td><code>.tagit("remove", 12)</code></td>
+      <td>Bool</td>
+      <td>Removes a tag by its value or label.</td>
+    </tr>
+
   </tbody>
 </table>
 ***

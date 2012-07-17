@@ -453,7 +453,21 @@
                 value:(value === undefined ? label : value),
                 element:element,
                 index:self.tagsArray.length
+            };
+        },
+
+        remove:function (value) {
+            var tags = this.tagsArray;
+            for (var i = 0; i < tags.length; i++) {
+                if (tags[i].value == value)
+                    break;
             }
+            if (i > -1 && i < tags.length) {
+                tags.splice(i, 1);
+                this.fill(tags);
+                return true;
+            }
+            return false;
         }
 
 
