@@ -38,12 +38,14 @@
             //action e.g. removed, added, sorted
             tagsChanged:function (tagValue, action, element) {
                 ;
-            }
+            },
+            //should 'paste' event trigger 'blur', thus potentially adding a new tag
+            // (true for backwards compatibility)
+            blurOnPaste:true
         },
 
         _splitAt:/\ |,/g,
         _existingAtIndex:0,
-        _pasteMetaKeyPressed:false,
         _keys:{
             backspace:[8],
             enter:[13],
@@ -158,19 +160,14 @@
                     lastLi.removeClass('ui-state-error').addClass('ui-state-default');
                 }
 
-                _pasteMetaKeyPressed = e.metaKey;
                 self.lastKey = e.which;
             });
 
-            this.input.keyup(function (e) {
-
-                if (_pasteMetaKeyPressed && (e.which == 91 || e.which == 86))
-                    $(this).blur();
-
-                // timeout for the fast copy pasters
-                window.setTimeout(function () {
-                    _pasteMetaKeyPressed = e.metaKey;
-                }, 250);
+            this.input.bind("paste", function (e) {
+                if (self.options.blurOnPaste) {
+                    var input = $(this);
+                    self.timer = setTimeout(function () { input.blur(); }, 0);
+                }
             });
 
             //setup blur handler
