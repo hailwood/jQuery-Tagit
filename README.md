@@ -52,10 +52,10 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
     </tr>
 
     <tr>
-    	<td>allowNewTags</td>
-    	<td>Bool</td>
-    	<td>true</td>
-    	td>Allow tags that do not exist in tagSource to be entered?</td>
+      <td>allowNewTags</td>
+      <td>Bool</td>
+      <td>true</td>
+      <td>Allow tags that do not exist in tagSource to be entered?</td>
     </tr>
 
     <tr>
@@ -183,9 +183,9 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
     </tr>
 
     <tr>
-      <td><code>.tagit("remove", 12)</code></td>
+      <td><code>.tagit("remove", 'tag', 12)</code></td>
       <td>Bool</td>
-      <td>Removes a tag by its value or label.</td>
+      <td>Removes a tag by its label or value.</td>
     </tr>
 
   </tbody>

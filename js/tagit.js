@@ -437,7 +437,7 @@
 
         add:function (label, value) {
             if(typeof(label) == "object")
-                return this._addTag({label: label, value: value});
+                return this._addTag(label.label, label.value);
             else
                 return this._addTag(label, value);
         },
@@ -456,15 +456,23 @@
             };
         },
 
-        remove:function (value) {
-            var tags = this.tagsArray;
-            for (var i = 0; i < tags.length; i++) {
-                if (tags[i].value == value)
+        remove:function (label, value) {
+            if (this.tagsArray.length == 0)
+                return false;
+
+            label = this._lowerIfCaseInsensitive(label);
+            value = this._lowerIfCaseInsensitive(value);
+
+            for (var i = 0; i < this.tagsArray.length; i++) {
+                if (this._lowerIfCaseInsensitive(this.tagsArray[i].value) == value || this._lowerIfCaseInsensitive(this.tagsArray[i].label) == label) {
                     break;
+                }
             }
-            if (i > -1 && i < tags.length) {
-                tags.splice(i, 1);
-                this.fill(tags);
+
+            if (i >= 0 && i < this.tagsArray.length) {
+                var tag = this.tagsArray[i];
+                tag.element.remove();
+                this._popTag(tag);
                 return true;
             }
             return false;
