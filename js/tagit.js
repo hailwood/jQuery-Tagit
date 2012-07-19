@@ -39,6 +39,7 @@
             tagsChanged:function (tagValue, action, element) {
                 ;
             },
+            maxTags:undefined,
             //should 'paste' event trigger 'blur', thus potentially adding a new tag
             // (true for backwards compatibility)
             blurOnPaste:true
@@ -114,13 +115,19 @@
             this.options.source = this.options.tagSource;
             this.options.select = function (event, ui) {
                 self.input.data('autoCompleteTag', true);
-                clearTimeout(self.timer);
+            clearTimeout(self.timer);
+            if (self.options.maxTags !== undefined && self.tagsArray.length == self.options.maxTags) {
+                self.input.val("");
+            }
+            else {
                 if (ui.item.label === undefined)
                     self._addTag(ui.item.value);
                 else
                     self._addTag(ui.item.label, ui.item.value);
-                return false;
             }
+
+            return false;
+        },
 
             this.options.focus = function (event, ui) {
                 if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
