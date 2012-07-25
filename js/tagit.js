@@ -200,7 +200,7 @@
 
             if (this.options.select) {
                 this.select = $('<select class="tagit-hiddenSelect" name="' +
-                    this.element.attr('name') || this.element.data('name') +
+                    (this.element.attr('name') || this.element.data('name')) +
                     '" multiple="multiple"></select>');
                 this.element.after(this.select);
             }
