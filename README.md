@@ -2,7 +2,7 @@ It depends on [jQuery 1.7.2](http://jquery.com). and [jQuery-ui 1.8](http://jque
 
 Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply suggestions to users as they type and has some awesome features like sortable tags.
 
-> Quicklinks 
+> Quicklinks
 > * [Demo](http://webspirited.com/tagit)
 > * [Features](#features)
 > * [Options](#options)
@@ -21,6 +21,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
 * Option to toggle usage of a hidden select so the tags can be sent using a normal form!
 * Ability to re-arrange tags by drag and drop!
 * Optional ThemeRoller compatibility!
+* Fully HTML5 Data-attributes compliant!
 
 ## <a id="options" href="#options">Options</a>
 <table>
@@ -71,14 +72,14 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>1</td>
       <td>The minimum length before a triggerKey will create a tag</td>
     </tr>
-    
+
     <tr>
       <td>maxLength</td>
       <td>Int</td>
       <td>1</td>
       <td>The maximum length a tag is allowed to be</td>
     </tr>
-    
+
     <tr>
       <td>select</td>
       <td>Bool</td>
@@ -106,7 +107,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>caseSensitive</td>
       <td>Bool</td>
       <td>false</td>
-      <td>The check for existing tags is case sensitive. 
+      <td>The check for existing tags is case sensitive.
           If false the words "Foo" and "foo" considered the same
       </td>
     </tr>
@@ -115,7 +116,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>highlightOnExistColor</td>
       <td>String</td>
       <td>#0F0</td>
-      <td>If the user tries to add a tag that already exists the existing 
+      <td>If the user tries to add a tag that already exists the existing
           tag will run a highlight effect using the defined background color.
           If null, the highlight effect is turned off.
       </td>
@@ -141,7 +142,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
     </tr>
   </tbody>
 </table>
-    
+
 ## <a id="methods" href="#methods">Methods</a>
 <table>
   <thead>
@@ -192,5 +193,5 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
 </table>
 ***
 
-[![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)  
-This work is licensed under a [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/) with original attribution remaining with Matthew Hailwood and [http://jquery.webspirited.com](jquery.webspirited.com). 
+[![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
+This work is licensed under a [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/) with original attribution remaining with Matthew Hailwood and [http://jquery.webspirited.com](jquery.webspirited.com).

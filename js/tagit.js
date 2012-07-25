@@ -72,7 +72,7 @@
             //add any initial tags added through html to the array
             this.element.children('li').each(function () {
                 var tag = $(this);
-                var tagValue = tag.attr('tagValue');
+                var tagValue = tag.attr('tagValue') || tag.data('value');
                 self.options.initialTags.push({label:tag.text(), value:(tagValue ? tagValue : tag.text())});
             });
 
@@ -132,7 +132,7 @@
             this.options.focus = function (event, ui) {
                 if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
                     self.input.val(ui.item.label);
-                    self.input.attr('tagValue', ui.item.value);
+                    self.input.data('value', ui.item.value);
                     return false;
                 }
             };
@@ -179,7 +179,7 @@
             //setup blur handler
             this.input.blur(function (e) {
                 self.currentLabel = $(this).val();
-                self.currentValue = $(this).attr('tagValue');
+                self.currentValue = $(this).data('value');
                 if (self.options.allowNewTags) {
                     self.timer = setTimeout(function () {
                         self._addTag(self.currentLabel, self.currentValue);
@@ -187,7 +187,7 @@
                         self.currentLabel = '';
                     }, 400);
                 }
-                $(this).val('').removeAttr('tagValue');
+                $(this).val('').removeData('value');
                 return false;
             });
 
@@ -199,7 +199,9 @@
             }
 
             if (this.options.select) {
-                this.select = $('<select class="tagit-hiddenSelect" name="' + this.element.attr('name') + '" multiple="multiple"></select>');
+                this.select = $('<select class="tagit-hiddenSelect" name="' +
+                    this.element.attr('name') || this.element.data('name') +
+                    '" multiple="multiple"></select>');
                 this.element.after(this.select);
             }
             this._initialTags();

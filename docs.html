@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+<head>
+  <title>jQuery Tagit Demo Page (HTML)</title>
+  <script src="demo/js/jquery.1.7.2.min.js"></script>
+  <script src="demo/js/jquery-ui.1.8.20.min.js"></script>
+
+  <link href="demo/css/demo.css" rel="stylesheet" type="text/css"/>
+
+  <script>
+
+	$(function () {
+
+	  $('.browser').hover(
+		function () {
+		  $(this).children('a').children('div').show('fast');
+		},
+		function () {
+		  $(this).children('a').children('div').hide('fast');
+		});
+
+	  setInterval("$('#fork').effect('pulsate', { times:1 }, 500);", 5000);
+
+
+	});
+  </script>
+</head>
+<body>
+<a id="fork" href="https://github.com/hailwood/jQuery-Tagit">
+  <img style="position: fixed; top: 0; left: 0; border: 0;"
+	   src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub">
+</a>
+
+<div id="wrap">
+<h1>jQuery Tagit Documentation Page</h1>
+
+<div id="description" class="box"><a name="description"></a>
+  The jQuery Tagit plugin transforms an html unordered list into a unique tagging plugin.<br/>
+  Why unique? Because jQuery Tagit uses jQuery Ui's auto-complete plugin to supply suggestions to users
+  as they type.
+</div>
+
+<h2><a name="browsers">Browser Support</a></h2>
+
+<div class="box">
+  <div class="browser">
+	<a id="chrome" href="http://www.google.com/chrome">
+	  <div>Works in Google Chrome!</div>
+	</a>
+  </div>
+  <div class="browser">
+	<a id="firefox" href="http://www.mozilla.com">
+	  <div>Works in Firefox!</div>
+	</a>
+  </div>
+  <div class="browser">
+	<a id="ie" href="http://www.microsoft.com/windows/internet-explorer">
+	  <div>Works in IE7+!</div>
+	</a>
+  </div>
+  <div class="browser">
+	<a id="opera" href="http://www.opera.com">
+	  <div>Works in Opera!</div>
+	</a>
+  </div>
+  <div class="browser" style="margin-right: 0">
+	<a id="safari" href="http://www.apple.com/safari">
+	  <div>Works in Safari!</div>
+	</a>
+  </div>
+  <div style="clear: both;"></div>
+</div>
+
+<h2><a name="features">Features</a></h2>
+
+<div class="box features">
+  <ul>
+	<li>Convenient way for users to enter a list of items</li>
+	<li>Fully integrated with jQuery ui auto complete</li>
+	<li>Automatically adds current input as tag if input loses focus</li>
+	<li>Easy to use public methods</li>
+	<li>Easy to theme (See the css folder)</li>
+	<li>Customizable <em>accept</em> keys</li>
+	<li>Backspace on empty input deletes previous tag</li>
+	<li>Ability to provide <em>initial tags</em> on creation through options</li>
+	<li>Ability to provide <em>initial tags</em> on creation via list items</li>
+	<li>Option to toggle usage of a hidden select so the tags can be sent using a normal form!</li>
+	<li>Ability to re-arrange tags by drag and drop!</li>
+	<li><a href="index.themeroller.html">Optional ThemeRoller compatibility!</a></li>
+    <li>Fully HTML5 Data attribute compliant!</li>
+  </ul>
+</div>
+
+<h2><a name="code">The Minimum Code Required</a></h2>
+
+<div class="code box">
+  $(<span class="green">'#tags'</span>).tagit();
+</div>
+
+<h2><a name="options">Options</a></h2>
+
+<table class="options">
+  <thead>
+  <tr>
+	<th>Name</th>
+	<th>Type</th>
+	<th>Default</th>
+	<th>Note</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="odd">
+	<td>tagSource</td>
+	<td>String, Array, Callback</td>
+	<td>[]</td>
+	<td class="left">This option maps directly to the <a href="http://jqueryui.com/demos/autocomplete/">jQuery
+	  UI Autocomplete source option</a></td>
+  </tr>
+
+  <tr class="even">
+	<td>triggerKeys</td>
+	<td>Array</td>
+	<td>['enter', 'space', 'comma', 'tab']</td>
+	<td class="left">An array containing all or any of the default options.<br/>
+	  These are the keys that will trigger a tag completion
+	</td>
+  </tr>
+
+  <tr class="odd">
+	<td>allowNewTags</td>
+	<td>Bool</td>
+	<td>true</td>
+	<td class="left">Allow tags that do not exist in tagSource to be entered?</td>
+  </tr>
+
+  <tr class="even">
+	<td>initialTags</td>
+	<td>Array</td>
+	<td>[]</td>
+	<td class="left">An array containing tags to pre-populate the field with</td>
+  </tr>
+
+  <tr class="odd">
+	<td>minLength</td>
+	<td>Int</td>
+	<td>1</td>
+	<td class="left">The minimum length before a triggerKey will create a tag</td>
+  </tr>
+
+  <tr class="even">
+	<td>select</td>
+	<td>Bool</td>
+	<td>false</td>
+	<td class="left">Maintain a hidden select in place for form submissions<br/>
+	  To name the select simply give your UL a name attribute!
+	  <hr/>
+	  Don't forget
+	  to include &#91; and &#93; if your language (e.g. PHP) requires them!
+	</td>
+  </tr>
+
+  <tr class="odd">
+	<td>tagsChanged</td>
+	<td>Callback</td>
+	<td>function(tagValue, action, element)</td>
+	<td class="left">Callback on changed tags:<br>
+	  <b>tagValue:</b> string<br>
+	  <b>action:</b> string - either 'added', 'popped', 'moved' or 'reset'<br>
+	  <b>element:</b> object - reference to the added LI element
+	</td>
+  </tr>
+
+  <tr class="even">
+	<td>caseSensitive</td>
+	<td>Bool</td>
+	<td>false</td>
+	<td class="left">
+	  The check for existing tags is case sensitive. If false the words "Foo" and "foo" considered the same
+	</td>
+  </tr>
+
+  <tr class="odd">
+	<td>highlightOnExistColor</td>
+	<td>String</td>
+	<td>#0F0</td>
+	<td class="left">
+	  If the user tries to add a tag, that already exists, the existing tag will run a highlight effect using
+	  the defined background color.
+	  If null, the highlight effect is turned off.
+	</td>
+  </tr>
+
+  <tr class="even">
+	<td>maxLength</td>
+	<td>Int</td>
+	<td><em>unlimited</em></td>
+	<td class="left">
+	  The maximum allowable length of a tag.<br/>
+	  If omitted, tags of unlimited length are allowed.
+	</td>
+  </tr>
+
+  <tr class="odd">
+	<td>maxTags</td>
+	<td>Int</td>
+	<td><em>unlimited</em></td>
+	<td class="left">
+	  The maximum number of tags that the user can enter.<br/>
+	  If omitted, an unlimited number of tags are allowed.
+	</td>
+  </tr>
+
+  <tr class="even">
+	<td>sortable</td>
+	<td>Bool, String</td>
+	<td><em>false</em></td>
+	<td class="left">
+	  Allows the user to re-order the tags using drag and drop.<br/>
+	  If true the whole tag is draggable, if 'handle' a handle is <br/>
+	  rendered and the tag is only draggable using the handle.
+	</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2><a name="methods">Methods</a></h2>
+
+<table class="methods">
+  <thead>
+  <tr>
+	<th>Name</th>
+	<th>Return</th>
+	<th>Note</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="odd">
+	<td>.tagit("destroy")</td>
+	<td>null</td>
+	<td class="left">Returns the ul to its original state</td>
+  </tr>
+
+  <tr class="even">
+	<td>.tagit("tags")</td>
+	<td>Array</td>
+	<td class="left">Returns an array of objects about all the tags.</td>
+  </tr>
+
+  <tr class="odd">
+	<td>.tagit("reset")</td>
+	<td>null</td>
+	<td class="left">Resets the tags list to the initial value</td>
+  </tr>
+
+  <tr class="even">
+	<td>.tagit("fill", [{label: 'tag', value: 12}, {label: 'stuff', value: 13}])</td>
+	<td>null</td>
+	<td class="left">Empties the tags and fills the plugin with the provided tags.</td>
+  </tr>
+
+  <tr class="odd">
+	<td>.tagit("add", {label: 'tag', value: 12})</td>
+	<td>Bool</td>
+	<td class="left">Adds a tag to the plugin.</td>
+  </tr>
+
+  </tbody>
+</table>
+
+<h2></h2>
+
+<div class="box">
+  &copy; Content and Design Matthew Hailwood 2012<br/>
+</div>
+
+</div>
+</body>
+</html>
