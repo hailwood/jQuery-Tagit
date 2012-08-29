@@ -361,7 +361,8 @@
             if (label == "")
                 return false;
             
-            label = _.escape(label);
+            //escape < > and &
+            label = label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             
             var tagExists = this._exists(label, value);
             if (tagExists !== false) {
