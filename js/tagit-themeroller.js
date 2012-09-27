@@ -39,6 +39,12 @@
             tagsChanged:function (tagValue, action, element) {
                 ;
             },
+            //callback function before a tag is added.
+            //ex. for simple validation.
+            //tagValue: value of tag that is added        
+            beforeAdd:function (tagValue) {
+
+            },             
             maxTags: undefined,
             //should 'paste' event trigger 'blur', thus potentially adding a new tag
             // (true for backwards compatibility)
@@ -270,6 +276,19 @@
         },
 
         _addTag:function (label, value) {
+            
+            
+            //BeforeAdd Callback
+            if(this.options.beforeAdd){
+
+                var tag = this.tag(label, value);
+                //Check if the callback returned false.
+                if(!this.options.beforeAdd(tag.value)) {
+                    return false;
+                }
+
+            }            
+            
             this.input.autocomplete('close').val("");
 
             //are we trying to add a tag that should be split?
