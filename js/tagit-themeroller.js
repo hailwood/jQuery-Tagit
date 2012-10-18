@@ -6,6 +6,66 @@
  * ---------------------------
  */
 
+(function($){
+
+    $.fn.autoGrowInput = function(o) {
+       
+        o = $.extend({
+            maxWidth: 1000,
+            minWidth: 0,
+            comfortZone: 70
+        }, o);
+
+        this.filter('input:text').each(function(){
+            var minWidth = o.minWidth || $(this).width(),
+                val = '',
+                input = $(this),
+                testSubject = $('<tester/>').css({
+                    position: 'absolute',
+                    top: -9999,
+                    left: -9999,
+                    width: 'auto',
+                    fontSize: input.css('fontSize'),
+                    fontFamily: input.css('fontFamily'),
+                    fontWeight: input.css('fontWeight'),
+                    letterSpacing: input.css('letterSpacing'),
+                    whiteSpace: 'nowrap'
+                }),
+                check = function() {
+
+                    if (val === (val = input.val())) {return;}
+
+                    // Enter new content into testSubject
+                    var escaped = val.replace(/&/g, '&amp;').replace(/\s/g,'&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    testSubject.html(escaped);
+
+                    // Calculate new width + whether to change
+                    var testerWidth = testSubject.width(),
+                        newWidth = (testerWidth + o.comfortZone) >= minWidth ? testerWidth + o.comfortZone : minWidth,
+                        currentWidth = input.width(),
+                        isValidWidthChange = (newWidth < currentWidth && newWidth >= minWidth)
+                                             || (newWidth > minWidth && newWidth < o.maxWidth);
+
+                    // Animate width
+                    if (isValidWidthChange) {
+                        //input.width(newWidth);
+                        input.css('cssText', "width: " + newWidth + "px !important");
+                    }
+
+                };
+
+            testSubject.insertAfter(input);
+
+            $(this).bind('keyup keydown blur update', check);
+
+        });
+
+        return this;
+
+    };
+
+})(jQuery);
+
 (function ($) {
     $.widget("ui.tagit", {
 
@@ -14,7 +74,9 @@
             //Maps directly to the jQuery-ui Autocomplete option
             tagSource:[],
             //What keys should trigger the completion of a tag
-            triggerKeys:['enter', 'space', 'comma', 'tab'],
+            triggerKeys:['enter', 'space', 'comma', 'tab','semicolon'],
+            //custom regex for splitting data
+            seperatorKeys: ['comma','semicolon'],
             //array method for setting initial tags
             initialTags:[],
             //minimum length of tags
@@ -52,7 +114,8 @@
             enter:[13],
             space:[32],
             comma:[44, 188],
-            tab:[9]
+            tab:[9],
+            semicolon:[59,186]
         },
 
         _sortable:{
@@ -76,20 +139,30 @@
                 self.options.initialTags.push({label:tag.text(), value:(tagValue ? tagValue : tag.text())});
             });
 
+            pushRegex = function(list, key,regex){
+                if ($.inArray(key, self.options.seperatorKeys) != -1){
+                    regexes.push(regex);
+                }
+            };
             //setup split according to the trigger keys
             self._splitAt = null;
-            if ($.inArray('space', self.options.triggerKeys) > 0 && $.inArray('comma', self.options.triggerKeys) > 0)
-                self._splitAt = /\ |,/g;
-            else if ($.inArray('space', self.options.triggerKeys) > 0)
-                self._splitAt = /\ /g;
-            else if ($.inArray('comma', self.options.triggerKeys) > 0)
-                self._splitAt = /,/g;
+            var regexes = [];
+            
+            pushRegex(regexes, 'space', /\ /);
+            pushRegex(regexes, 'semicolon', /;/);
+            pushRegex(regexes, 'comma', /,/);
+            
+            var regexString = $.map(regexes,function(x){
+                return x.source;
+            }).join('|');
+            
+            self._splitAt = new RegExp(regexString,"g");
 
             //add the html input
             this.element.html('<li class="tagit-new"><input class="tagit-input ui-widget-content" type="text" /></li>');
 
             this.input = this.element.find(".tagit-input");
-
+            this.input.autoGrowInput();
             //setup click handler
             $(this.element).click(function (e) {
                 if ($(e.target).hasClass('tagit-close')) {
@@ -127,7 +200,7 @@
                 }
 
                 return false;
-            }
+            };
 
             this.options.focus = function (event, ui) {
                 if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
@@ -270,6 +343,7 @@
         },
 
         _addTag:function (label, value) {
+
             this.input.autocomplete('close').val("");
 
             //are we trying to add a tag that should be split?
@@ -284,6 +358,9 @@
 
             if (label == "")
                 return false;
+            
+            //escape < > and &
+            label = label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
             var tagExists = this._exists(label, value);
             if (tagExists !== false) {
@@ -340,6 +417,7 @@
         },
 
         _isInitKey:function (keyCode) {
+
             var keyName = "";
             for (var key in this._keys)
                 if ($.inArray(keyCode, this._keys[key]) != -1)
