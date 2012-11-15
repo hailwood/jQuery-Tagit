@@ -367,6 +367,11 @@
             editInput.css('width', $(element).outerWidth());
             $(element).addClass('hidden');
             editInput.blur($.proxy(this._postEdit(element, editInput, initialValue), this));
+            editInput.keydown($.proxy(function(e) {
+                if (this._isInitKey(e.which)) {
+                    editInput.blur();
+                }
+            }, this));
             $(element).before(editInput);
             editInput[0].select();
         },
