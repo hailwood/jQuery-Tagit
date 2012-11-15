@@ -6,7 +6,6 @@
  * ---------------------------
  */
 
-
 (function($){
 
     $.fn.autoGrowInput = function(o) {
@@ -66,7 +65,6 @@
     };
 
 })(jQuery);
-
 (function ($) {
     $.widget("ui.tagit", {
 
@@ -166,7 +164,7 @@
 
             //add the html input
             this.element.html('<li class="tagit-new"><input class="tagit-input" type="text" /></li>');
-            
+
             this.input = this.element.find(".tagit-input");
             this.input.autoGrowInput();
             //setup click handler
@@ -344,13 +342,15 @@
                     //else attempt to add new tag and if succeeded - remove old element and edit box
                     initialTag.element.remove();
                     this._popTag(initialTag);
-                    var lastTag = this.tagsArray[this.tagsArray.length - 1];
-                    //visually move tag to the old place
-                    lastTag.element.insertBefore(this.tagsArray[initialTagIndex].element);
-                    this._moveTag(this.tagsArray.length - 1, initialTagIndex); //move element from last to old place
-                    if(this.options.tagsChanged) { //fire an update
-                        var tag = this.tagsArray[initialTagIndex];
-                        this.options.tagsChanged(tag.value, 'moved', tag.element);
+                    if (lastTagIndex != initialTagIndex) {
+                        var lastTag = this.tagsArray[lastTagIndex];
+                        //visually move tag to the old place
+                        lastTag.element.insertBefore(this.tagsArray[initialTagIndex].element);
+                        this._moveTag(this.tagsArray.length - 1, initialTagIndex); //move element from last to old place
+                        if(this.options.tagsChanged) { //fire an update
+                            var tag = this.tagsArray[initialTagIndex];
+                            this.options.tagsChanged(tag.value, 'moved', tag.element);
+                        }
                     }
                     finishEditing();
                 }
