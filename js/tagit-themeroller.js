@@ -342,6 +342,7 @@
                     //else attempt to add new tag and if succeeded - remove old element and edit box
                     initialTag.element.remove();
                     this._popTag(initialTag);
+                    var lastTagIndex = this.tagsArray.length - 1;
                     if (lastTagIndex != initialTagIndex) {
                         var lastTag = this.tagsArray[lastTagIndex];
                         //visually move tag to the old place
@@ -565,6 +566,7 @@
 
         destroy:function () {
             $.Widget.prototype.destroy.apply(this, arguments); // default destroy
+            clearTimeout(this.timer);
             this.tagsArray = [];
         },
 
