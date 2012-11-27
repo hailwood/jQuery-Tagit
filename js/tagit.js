@@ -217,12 +217,13 @@
             this.options.select = os;
 
             //setup keydown handler
-            this.input.keydown(function (e) {
+            this.input.keypress(function (e) {
+                var pressedKey = e.which || e.keyCode || e.charCode;
                 var lastLi = self.element.children(".tagit-choice:last");
-                if (e.which == self._keys.backspace)
+                if (pressedKey == self._keys.backspace)
                     return self._backspace(lastLi);
 
-                if (self._isInitKey(e.which) && !(self._isTabKey(e.which) && this.value == '' && !self.input.data('autoCompleteTag'))) {
+                if (self._isInitKey(pressedKey) && !(self._isTabKey(pressedKey) && this.value == '' && !self.input.data('autoCompleteTag'))) {
                     e.preventDefault();
 
                     self.input.data('autoCompleteTag', false);
@@ -242,7 +243,7 @@
                 if (lastLi.hasClass('selected'))
                     lastLi.removeClass('selected');
 
-                self.lastKey = e.which;
+                self.lastKey = pressedKey;
             });
 
             this.input.bind("paste", function (e) {
