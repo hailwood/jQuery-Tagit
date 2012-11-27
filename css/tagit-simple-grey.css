@@ -122,6 +122,16 @@ ul.tagit li.tagit-choice a.tagit-close:hover {
     color: #535353;
 }
 
+ul.tagit div.tagit-label.hidden {
+	display: none;
+}
+
+ul.tagit input.tagit-edit {
+	margin: 0px 0px 0px 2px;
+	border: none;
+	line-height: 16px;
+}
+
 ul.tagit input[type="text"] {
     -moz-box-sizing: border-box;
     border: none !important;
