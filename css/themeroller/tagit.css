@@ -34,6 +34,25 @@ ul.tagit.ui-widget li.tagit-choice a.tagit-close{
 	margin-top: -8px;
 }
 
+ul.tagit div.tagit-label.hidden {
+	display: none;
+}
+
+ul.tagit input.tagit-edit {
+	margin: 0px 0px 0px 2px;
+	border: none;
+	line-height: 16px;
+}
+
+ul.tagit input[type="text"] {
+    -moz-box-sizing: border-box;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: inherit !important;
+    outline: none;
+}
+
 ul.tagit.ui-widget li.tagit-new input[type="text"].tagit-input,
 ul.tagit.ui-widget li.tagit-new input[type="text"].tagit-input:active,
 ul.tagit.ui-widget li.tagit-new input[type="text"].tagit-input:hover,
