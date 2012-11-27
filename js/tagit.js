@@ -3,6 +3,8 @@
  * ---------------------------
  * Owner:     jquery.webspirited.com
  * Developer: Matthew Hailwood
+ * Patches:   Alban Crommer
+ * Source:    https://github.com/albancrommer/jQuery-Tagit
  * ---------------------------
  */
 
@@ -71,7 +73,7 @@
     $.widget("ui.tagit", {
 
         // default options
-        options:{
+        options: {
             //Maps directly to the jQuery-ui Autocomplete option
             tagSource:[],
             //What keys should trigger the completion of a tag
@@ -127,9 +129,9 @@
         _create:function () {
 
             var self = this;
+            this.options.initialTags = [] // Force reinit
             this.tagsArray = [];
             this.timer = null;
-
             //add class "tagit" for theming
             this.element.addClass("tagit");
 
@@ -206,7 +208,7 @@
         },
 
             this.options.focus = function (event, ui) {
-                if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
+                if (ui.item.label !== undefined && /^key/.test((event.originalEvent || event.originalEvent.originalEvent).type)) {
                     self.input.val(ui.item.label);
                     self.input.data('value', ui.item.value);
                     return false;
@@ -462,7 +464,6 @@
             if (this.options.tagsChanged)
                 _temp = this.options.tagsChanged;
             this.options.tagsChanged = null;
-
             if (this.options.initialTags.length != 0) {
                 $(this.options.initialTags).each(function (i, element) {
                     if (typeof (element) == "object")
@@ -502,6 +503,7 @@
         destroy:function () {
             $.Widget.prototype.destroy.apply(this, arguments); // default destroy
             this.tagsArray = [];
+
         },
 
         reset:function () {
