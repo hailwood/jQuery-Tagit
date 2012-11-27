@@ -321,12 +321,12 @@
         },
 
         _postEdit: function(element, editInput, initialValue) {
-            var finishEditing = function() {
+            var finishEditing = $.proxy(function() {
                 editInput.remove();
                 $(element).removeClass('hidden');
                 $(element).parent().removeClass('edited');
                 this._isEditing = false;
-            };
+            }, this);
 
             return function() {
                 var initialTagIndex = $(element).parent().index();
@@ -368,8 +368,9 @@
             editInput.css('width', $(element).outerWidth());
             $(element).addClass('hidden');
             editInput.blur($.proxy(this._postEdit(element, editInput, initialValue), this));
-            editInput.keydown($.proxy(function(e) {
-                if (this._isInitKey(e.which)) {
+            editInput.keypress($.proxy(function(e) {
+                var pressedKey = e.which || e.keyCode || e.charCode;
+                if (this._isInitKey(pressedKey)) {
                     editInput.blur();
                 }
             }, this));
