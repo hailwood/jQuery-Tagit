@@ -213,35 +213,17 @@
             this.input.autocomplete(this.options);
             this.options.select = os;
 
+            self.isKeyEventProcessed = false;
+            this.input.keyup(function(e) {
+                self.isKeyEventProcessed = false;
+            });
+
+            this.input.keydown(function (e) {
+                self._processKeyEvent(e);
+            });
             //setup keydown handler
             this.input.keypress(function (e) {
-                var pressedKey = e.which || e.keyCode || e.charCode;
-                var lastLi = self.element.children(".tagit-choice:last");
-                if (pressedKey == self._keys.backspace)
-                    return self._backspace(lastLi);
-
-                if (self._isInitKey(pressedKey) && !(self._isTabKey(pressedKey) && this.value == '' && !self.input.data('autoCompleteTag'))) {
-                    e.preventDefault();
-
-                    self.input.data('autoCompleteTag', false);
-
-                    if (!self.options.allowNewTags || (self.options.maxTags !== undefined && self.tagsArray.length == self.options.maxTags)) {
-                        self.input.val("");
-                    }
-                    else if (self.options.allowNewTags && $(this).val().length >= self.options.minLength) {
-                        self._addTag($(this).val());
-                    }
-                }
-
-                if (self.options.maxLength !== undefined && self.input.val().length == self.options.maxLength) {
-                    e.preventDefault();
-                }
-
-                if (lastLi.hasClass('ui-state-error')){
-                    lastLi.removeClass('ui-state-error').addClass('ui-state-default');
-                }
-
-                self.lastKey = pressedKey;
+                self._processKeyEvent(e);
             });
 
             this.input.bind("paste", function (e) {
@@ -313,6 +295,43 @@
 
         },
 
+        _processKeyEvent: function(e) {
+            if (this.isKeyEventProcessed) {
+                return; //don't process key events twice
+            }
+
+            var pressedKey = e.which || e.keyCode || e.charCode;
+            console.log("processKeyEvent:" + pressedKey);
+            var lastLi = this.element.children(".tagit-choice:last");
+
+            this.isKeyEventProcessed = true;
+
+            if (pressedKey == this._keys.backspace) {
+                return this._backspace(lastLi);
+            }
+
+            if (this._isInitKey(pressedKey) && !(this._isTabKey(pressedKey) && this.value == '' && !this.input.data('autoCompleteTag'))) {
+                e.preventDefault();
+
+                this.input.data('autoCompleteTag', false);
+
+                if (!this.options.allowNewTags || (this.options.maxTags !== undefined && this.tagsArray.length == this.options.maxTags)) {
+                    this.input.val("");
+                }
+                else if (this.options.allowNewTags && $(this).val().length >= this.options.minLength) {
+                    this._addTag($(this).val());
+                }
+            }
+
+            if (this.options.maxLength !== undefined && this.input.val().length == this.options.maxLength) {
+                e.preventDefault();
+            }
+
+            if (lastLi.hasClass('selected'))
+                lastLi.removeClass('selected');
+
+            this.lastKey = pressedKey;
+        },
         _popSelect:function (tag) {
             $('option:eq(' + tag.index + ')', this.select).remove();
             this.select.change();
