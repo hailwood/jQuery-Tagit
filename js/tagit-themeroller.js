@@ -91,6 +91,7 @@
             //true: entire tag is draggable
             //'handle': a handle is rendered which is draggable
             sortable:false,
+            editable:false,
             //color to highlight text when a duplicate tag is entered
             highlightOnExistColor:'#0F0',
             //empty search on focus
@@ -121,6 +122,8 @@
         _sortable:{
             sorting:-1
         },
+
+        _idEditing: false,
 
         //initialization function
         _create:function () {
@@ -175,9 +178,14 @@
                     self._popTag(tag);
                 }
                 else {
-                    self.input.focus();
+                    if (!self._isEditing) { //focus default input if we're not editing existing tag at the moment
+                        self.input.focus();
+                    }
                     if (self.options.emptySearch && $(e.target).hasClass('tagit-input') && self.input.val() == '' && self.input.autocomplete != undefined) {
                         self.input.autocomplete('search');
+                    }
+                    if (self.options.editable && $(e.target).hasClass('tagit-label')) {
+                        self._edit(e.target);
                     }
                 }
             });
@@ -331,7 +339,64 @@
                 lastLi.removeClass('selected');
 
             this.lastKey = pressedKey;
+        _postEdit: function(element, editInput, initialValue) {
+            var finishEditing = $.proxy(function() {
+                editInput.remove();
+                $(element).removeClass('hidden');
+                $(element).parent().removeClass('edited');
+                this._isEditing = false;
+            }, this);
+
+            return function() {
+                var initialTagIndex = $(element).parent().index();
+                var initialTag = this.tagsArray[initialTagIndex];
+                //try to add new and if success - remove old
+                var newValue = editInput.val();
+                if (this._splitAt && newValue.search(this._splitAt) > 0) {
+                    newValue = newValue.split(this._splitAt)[0]; //use only first value part - no splitters in edit
+                }
+                if (newValue == initialValue) {
+                    finishEditing();
+                } else if (this._addTag(newValue)) {
+                    //else attempt to add new tag and if succeeded - remove old element and edit box
+                    initialTag.element.remove();
+                    this._popTag(initialTag);
+                    var lastTagIndex = this.tagsArray.length - 1;
+                    if (lastTagIndex != initialTagIndex) {
+                        var lastTag = this.tagsArray[lastTagIndex];
+                        //visually move tag to the old place
+                        lastTag.element.insertBefore(this.tagsArray[initialTagIndex].element);
+                        this._moveTag(this.tagsArray.length - 1, initialTagIndex); //move element from last to old place
+                        if(this.options.tagsChanged) { //fire an update
+                            var tag = this.tagsArray[initialTagIndex];
+                            this.options.tagsChanged(tag.value, 'moved', tag.element);
+                        }
+                    }
+                    finishEditing();
+                }
+            }
         },
+
+        _edit: function(element) {
+            this._isEditing = true;
+            var initialValue = $(element).text();
+            var editInput = $('<input>');
+            editInput.val(initialValue);
+            $(element).parent().addClass('edited');
+            editInput.addClass('tagit-edit');
+            editInput.css('width', $(element).outerWidth());
+            $(element).addClass('hidden');
+            editInput.blur($.proxy(this._postEdit(element, editInput, initialValue), this));
+            editInput.keypress($.proxy(function(e) {
+                var pressedKey = e.which || e.keyCode || e.charCode;
+                if (this._isInitKey(pressedKey)) {
+                    editInput.blur();
+                }
+            }, this));
+            $(element).before(editInput);
+            editInput[0].select();
+        },
+
         _popSelect:function (tag) {
             $('option:eq(' + tag.index + ')', this.select).remove();
             this.select.change();
@@ -358,7 +423,7 @@
             if (this.options.select)
                 this._popSelect(tag);
             if (this.options.tagsChanged)
-                this.options.tagsChanged(tag.value || tag.label, 'popped', tag);
+                this.options.tagsChanged(tag? (tag.value || tag.label) : null, 'popped', tag);
             return;
         },
 
@@ -392,7 +457,7 @@
             tag.element = $('<li class="tagit-choice ui-widget-content ui-state-default"'
                 + (value !== undefined ? ' tagValue="' + value + '"' : '') + '>'
                 + (this.options.sortable == 'handle' ? '<a class="ui-icon ui-icon-grip-dotted-vertical" style="float:left"></a>' : '')
-                + label + '<a class="tagit-close ui-state-error-text">x</a></li>');
+                + '<div class="tagit-label">' + label + '</div>' + '<a class="tagit-close ui-state-error-text">x</a></li>');
             tag.element.insertBefore(this.input.parent());
             this.tagsArray.push(tag);
 
@@ -433,7 +498,10 @@
             tag.element.stop();
 
             var initialColor = tag.element.css('color');
-            tag.element.animate({color:this.options.highlightOnExistColor}, 100).animate({'color':initialColor}, 800);
+            tag.element.animate({color:this.options.highlightOnExistColor}, 100).animate({'color':initialColor}, 800, null, function() {
+                //reset style to initial
+                tag.element.attr('style', '');
+            });
         },
 
         _isInitKey:function (keyCode) {
@@ -518,6 +586,7 @@
 
         destroy:function () {
             $.Widget.prototype.destroy.apply(this, arguments); // default destroy
+            clearTimeout(this.timer);
             this.tagsArray = [];
         },
 
