@@ -318,8 +318,8 @@
                 if (!this.options.allowNewTags || (this.options.maxTags !== undefined && this.tagsArray.length == this.options.maxTags)) {
                     this.input.val("");
                 }
-                else if (this.options.allowNewTags && $(this).val().length >= this.options.minLength) {
-                    this._addTag($(this).val());
+                else if (this.options.allowNewTags && this.input.val().length >= this.options.minLength) {
+                    this._addTag(this.input.val());
                 }
             }
 
