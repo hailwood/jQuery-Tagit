@@ -339,7 +339,9 @@
                 lastLi.removeClass('selected');
 
             this.lastKey = pressedKey;
-        _postEdit: function(element, editInput, initialValue) {
+        },
+
+		_postEdit: function(element, editInput, initialValue) {
             var finishEditing = $.proxy(function() {
                 editInput.remove();
                 $(element).removeClass('hidden');
