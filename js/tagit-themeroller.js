@@ -128,7 +128,7 @@
             var self = this;
             this.tagsArray = [];
             this.timer = null;
-
+            self.options.initialTags=[];
             //add class "tagit" for theming
             this.element.addClass("tagit ui-widget ui-widget-content");
 
