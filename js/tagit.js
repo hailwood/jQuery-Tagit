@@ -130,7 +130,7 @@
             this.tagsArray = [];
             this.timer = null;
             this.lastKey = 0;
-
+            self.options.initialTags=[];
             //add class "tagit" for theming
             this.element.addClass("tagit");
 
