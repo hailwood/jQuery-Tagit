@@ -47,6 +47,7 @@
 	  $('#demo5').tagit({maxLength:5, maxTags:5 });
 	  $('#demo6').tagit({tagSource:availableTags, sortable:true});
 	  $('#demo7').tagit({tagSource:availableTags, sortable:'handle'});
+	  $('#demo9').tagit({tagSource:availableTags, editable: true});
 
 
 	  $('#demo1GetTags').click(function () {
@@ -73,7 +74,12 @@
 	  $('#demo7GetTags').click(function () {
 		showTags($('#demo7').tagit('tags'))
 	  });
-
+	  $('#demo8GetTags').click(function () {
+		showTags($('#demo8').tagit('tags'))
+	  });
+	  $('#demo9GetTags').click(function () {
+		showTags($('#demo9').tagit('tags'))
+	  });
 	  function showTags(tags) {
 		console.log(tags);
 		var string = "Tags (label : value)\r\n";
@@ -224,6 +230,25 @@
   </ul>
   <div class="buttons">
 	<button id="demo7GetTags" value="Get Tags">Get Tags</button>
+  </div>
+</div>
+
+<h3>Editable</h3>
+
+<div class="box">
+  <div class="note">
+	Click on a tag to edit it!
+  </div>
+
+  <ul id="demo9" name="demo9">
+	<li>here</li>
+	<li>are</li>
+	<li>some</li>
+	<li>initial</li>
+	<li>tags</li>
+  </ul>
+  <div class="buttons">
+	<button id="demo9GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
