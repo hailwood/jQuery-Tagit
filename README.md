@@ -1,3 +1,8 @@
+## Note for contributors/pull requesters
+We welcome all bug fixes and additions to tagit, it is a community project after all, however we have one rule for commits:   
+* All edits must be applied to **both tagit.js and tagit-themeroller.js** no pull requests will be accepted unless this is done to ensure the scripts function equally.
+
+<hr />
 It depends on [jQuery 1.7.2](http://jquery.com). and [jQuery-ui 1.8](http://jqueryui.com) The _jQuery Tagit Plugin_ transforms an html unordered list into a unique tagging plugin.
 
 Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply suggestions to users as they type and has some awesome features like sortable tags.
