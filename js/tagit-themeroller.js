@@ -331,7 +331,7 @@
                 }
             }
 
-            if (this.options.maxLength !== undefined && this.input.val().length >= this.options.maxLength) {
+            if (this.options.maxLength !== undefined && this.input.val().length > this.options.maxLength) {
                 e.preventDefault();
                 this.input.val(this.input.val().substring(0, this.options.maxLength));
             }
