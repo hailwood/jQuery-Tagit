@@ -306,11 +306,6 @@
         },
 
         _processKeyEvent: function(e) {
-
-            if (this.options.maxLength !== undefined && this.input.val().length >= this.options.maxLength) {
-                e.preventDefault();
-            }
-
             if (this.isKeyEventProcessed) {
                 return; //don't process key events twice
             }
@@ -336,6 +331,10 @@
                 else if (this.options.allowNewTags && this.input.val().length >= this.options.minLength) {
                     this._addTag(this.input.val());
                 }
+            }
+
+            if (this.options.maxLength !== undefined && this.input.val().length == this.options.maxLength) {
+                e.preventDefault();
             }
 
             if (lastLi.hasClass('selected'))
