@@ -211,7 +211,7 @@
             };
 
             this.options.focus = function (event, ui) {
-                if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
+                if (ui.item.label !== undefined && /^key/.test(event.originalEvent.type)) {
                     self.input.val(ui.item.label);
                     self.input.data('value', ui.item.value);
                     return false;
@@ -331,8 +331,9 @@
                 }
             }
 
-            if (this.options.maxLength !== undefined && this.input.val().length == this.options.maxLength) {
+            if (this.options.maxLength !== undefined && this.input.val().length > this.options.maxLength) {
                 e.preventDefault();
+                this.input.val(this.input.val().substring(0, this.options.maxLength));
             }
 
             if (lastLi.hasClass('selected'))
