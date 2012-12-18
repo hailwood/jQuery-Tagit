@@ -211,7 +211,7 @@
             };
 
             this.options.focus = function (event, ui) {
-                if (ui.item.label !== undefined && /^key/.test(event.originalEvent.originalEvent.type)) {
+                if (ui.item.label !== undefined && /^key/.test(event.originalEvent.type)) {
                     self.input.val(ui.item.label);
                     self.input.data('value', ui.item.value);
                     return false;
