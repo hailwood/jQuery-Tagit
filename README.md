@@ -1,3 +1,7 @@
+## Active Development?
+This plugin is no longer under active development, I will continue to merge in pull requests as long as they conform to the Note for contributers/pull requesters below, but do not have the time to activly develop the plugin. If someone wishes to take over the plugin create an issue in the tracker and I will discuss with you there.
+For anyone looking to use this plugin I strongly suggest checkout out the awesome [Select2](http://ivaynberg.github.com/select2/) by [Igor Vaynberg](https://github.com/ivaynberg). Which has all the features of Tagit and then some!
+
 ## Note for contributors/pull requesters
 We welcome all bug fixes and additions to tagit, it is a community project after all, however we have one rule for commits:   
 * All edits must be applied to **both tagit.js and tagit-themeroller.js** no pull requests will be accepted unless this is done to ensure the scripts function equally.
