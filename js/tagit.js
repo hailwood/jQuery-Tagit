@@ -49,7 +49,9 @@
                     // Animate width
                     if (isValidWidthChange) {
                         //input.width(newWidth);
-                        input.css('cssText', "width: " + newWidth + "px !important");
+                        //input.css('cssText', "width: " + newWidth + "px !important");
+                        var styles = input.attr('style');
+                        input.css('cssText', "width: " + newWidth + "px !important;"+styles);
                     }
 
                 };
