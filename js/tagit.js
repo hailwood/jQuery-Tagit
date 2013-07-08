@@ -82,6 +82,8 @@
             initialTags:[],
             //minimum length of tags
             minLength:1,
+            //minimum length of typed text before triggering jQuery-ui Autocomplete
+            autocompleteMinLength: 1,
             //should an html select be rendered to allow for normal form submission
             select:false,
             //if false only tags from `tagSource` are able to be entered
@@ -195,6 +197,7 @@
 
             //setup autocomplete handler
             var os = this.options.select;
+            var ml = this.options.minLength;
             this.options.appendTo = this.element;
             this.options.source = this.options.tagSource;
             this.options.select = function (event, ui) {
@@ -221,7 +224,9 @@
                 }
             };
             this.options.autoFocus = !this.options.allowNewTags;
+            this.options.minLength = this.options.autocompleteMinLength;
             this.input.autocomplete(this.options);
+            this.options.minLength = ml;
             this.options.select = os;
 
             self.isKeyEventProcessed = false;
