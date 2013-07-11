@@ -68,6 +68,19 @@
 
 })(jQuery);
 (function ($) {
+    $.widget( "custom.catcomplete", $.ui.autocomplete, {
+        _renderMenu: function( ul, items ) {
+            var that = this,
+                currentCategory = "";
+            $.each( items, function( index, item ) {
+                if ( item.category != currentCategory ) {
+                    ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                    currentCategory = item.category;
+                }
+                that._renderItemData( ul, item );
+            });
+        }
+    });
     $.widget("ui.tagit", {
 
         // default options
@@ -80,6 +93,7 @@
             seperatorKeys: ['comma','semicolon'],
             //array method for setting initial tags
             initialTags:[],
+            defaultType: 'none', //default type for newly added tags
             //minimum length of tags
             minLength:1,
             //minimum length of typed text before triggering jQuery-ui Autocomplete
@@ -186,8 +200,8 @@
                     if (!self._isEditing) { //focus default input if we're not editing existing tag at the moment
                         self.input.focus();
                     }
-                    if (self.options.emptySearch && $(e.target).hasClass('tagit-input') && self.input.val() == '' && self.input.autocomplete != undefined) {
-                        self.input.autocomplete('search');
+                    if (self.options.emptySearch && $(e.target).hasClass('tagit-input') && self.input.val() == '' && self.input.catcomplete != undefined) {
+                        self.input.catcomplete('search');
                     }
                     if (self.options.editable && $(e.target).hasClass('tagit-label')) {
                         self._edit(e.target);
@@ -208,9 +222,9 @@
             }
             else {
                 if (ui.item.label === undefined)
-                    self._addTag(ui.item.value);
+                    self._addTag({ label: ui.item.value});
                 else
-                    self._addTag(ui.item.label, ui.item.value);
+                    self._addTag({ label: ui.item.label, value: ui.item.value, type: ui.item.category});
             }
 
             return false;
@@ -225,7 +239,7 @@
             };
             this.options.autoFocus = !this.options.allowNewTags;
             this.options.minLength = this.options.autocompleteMinLength;
-            this.input.autocomplete(this.options);
+            this.input.catcomplete(this.options);
             this.options.minLength = ml;
             this.options.select = os;
 
@@ -255,7 +269,7 @@
                 self.currentValue = $(this).data('value');
                 if (self.options.allowNewTags) {
                     self.timer = setTimeout(function () {
-                        self._addTag(self.currentLabel, self.currentValue);
+                        self._addTag({ label: self.currentLabel, value: self.currentValue, type: self.options.defaultType});
                         self.currentValue = '';
                         self.currentLabel = '';
                     }, 400);
@@ -334,7 +348,7 @@
                     this.input.val("");
                 }
                 else if (this.options.allowNewTags && this.input.val().length >= this.options.minLength) {
-                    this._addTag(this.input.val());
+                    this._addTag({ label: this.input.val(), type: this.options.defaultType});
                 }
             }
 
@@ -367,7 +381,7 @@
                 }
                 if (newValue == initialValue) {
                     finishEditing();
-                } else if (this._addTag(newValue)) {
+                } else if (this._addTag({ label: newValue})) {
                     //else attempt to add new tag and if succeeded - remove old element and edit box
                     initialTag.element.remove();
                     this._popTag(initialTag);
@@ -437,37 +451,40 @@
             return;
         },
 
-        _addTag:function (label, value) {
-            
-            this.input.autocomplete('close').val("");
+        _addTag:function (newTag) {
+            if (newTag.label === undefined) { //set label to value to simplify possible use-cases, eg. if we send data from server where title isn't set
+                newTag.label = newTag.value;
+            }
+            this.input.catcomplete('close').val("");
 
             //are we trying to add a tag that should be split?
-            if (this._splitAt && label.search(this._splitAt) > 0) {
-                var result = label.split(this._splitAt);
+            if (this._splitAt && newTag.label.search(this._splitAt) > 0) {
+                var result = newTag.label.split(this._splitAt);
                 for (var i = 0; i < result.length; i++)
-                    this._addTag(result[i], value);
+                    this._addTag({ label: result[i], value: newTag.value});
                 return;
             }
 
-            label = label.replace(/,+$/, "").trim();
+            newTag.label = newTag.label.replace(/,+$/, "").trim();
 
-            if (label == "")
+            if (newTag.label == "")
                 return false;
             
             //escape < > and &
-            label = label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            newTag.label = newTag.label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             
-            var tagExists = this._exists(label, value);
+            var tagExists = this._exists(newTag.label, newTag.value);
             if (tagExists !== false) {
                 this._highlightExisting(tagExists);
                 return false;
             }
 
-            var tag = this.tag(label, value);
-            tag.element = $('<li class="tagit-choice"'
-                + (value !== undefined ? ' tagValue="' + value + '"' : '') + '>'
+            var tag = this.tag(newTag.label, newTag.value, newTag.type);
+            tag.element = $('<li class="tagit-choice'
+                + (newTag.type !== undefined ? ' tagit-type-' + newTag.type + '"' : '"')
+                + (newTag.value !== undefined ? ' tagValue="' + newTag.value + '"' : '') + '>'
                 + (this.options.sortable == 'handle' ? '<a class="ui-icon ui-icon-grip-dotted-vertical" style="float:left"></a>' : '')
-                + '<div class="tagit-label">' + label + '</div>' + '<a class="tagit-close">x</a></li>');
+                + '<div class="tagit-label">' + newTag.label + '</div>' + '<a class="tagit-close">x</a></li>');
             tag.element.insertBefore(this.input.parent());
             this.tagsArray.push(tag);
 
@@ -561,9 +578,9 @@
             if (this.options.initialTags.length != 0) {
                 $(this.options.initialTags).each(function (i, element) {
                     if (typeof (element) == "object")
-                        input._addTag(element.label, element.value);
+                        input._addTag({ label: element.label, value: element.value, type: element.type});
                     else
-                        input._addTag(element);
+                        input._addTag({ label: element});
                 });
             }
             this.options.tagsChanged = _temp;
@@ -621,20 +638,21 @@
 
         add:function (label, value) {
             if(typeof(label) == "object")
-                return this._addTag(label.label, label.value);
+                return this._addTag({ label: label.label, value: label.value});
             else
-                return this._addTag(label, value);
+                return this._addTag({ label: label, value: value});
         },
 
         autocomplete: function(){
             return this.input.data("autocomplete");
         },
 
-        tag:function (label, value, element) {
+        tag:function (label, value, type, element) {
             var self = this;
             return {
                 label:label,
                 value:(value === undefined ? label : value),
+                type: type,
                 element:element,
                 index:self.tagsArray.length
             };
