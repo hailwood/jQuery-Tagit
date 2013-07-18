@@ -73,7 +73,7 @@
             var that = this,
                 currentCategory = "";
             $.each( items, function( index, item ) {
-                if ( item.category != currentCategory ) {
+                if ( item.category && item.category != currentCategory ) {
                     ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
                     currentCategory = item.category;
                 }
@@ -584,6 +584,7 @@
                 });
             }
             this.options.tagsChanged = _temp;
+            this.options.tagsChanged(null, 'tagsInited', null);
         },
 
         _lowerIfCaseInsensitive:function (inp) {
