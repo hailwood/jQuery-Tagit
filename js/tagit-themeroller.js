@@ -603,7 +603,10 @@
                 this.tagsArray[ind].index = ind;
 
             if(this.options.select){
-                $('option:eq(' + old_index + ')', this.select).insertBefore($('option:eq(' + new_index + ')', this.select));
+                if (old_index < new_index)
+                    $('option:eq(' + old_index + ')', this.select).insertAfter($('option:eq(' + new_index + ')', this.select));
+                else
+                    $('option:eq(' + old_index + ')', this.select).insertBefore($('option:eq(' + new_index + ')', this.select));
             }
         },
         tags:function () {
