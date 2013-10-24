@@ -86,3 +86,7 @@ ul.ui-autocomplete li.ui-menu-item.ac-item div.ui-widget-content{
 	padding: 3px;
 
 }
+
+.tagit-hiddenSelect {
+    display:none;
+}
