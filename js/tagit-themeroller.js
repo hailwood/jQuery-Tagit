@@ -117,7 +117,7 @@
             placeholder:'Enter tags...',
             // The input width of the text field, If the placeholder is
             // too long or too short this value can be adjusted to fit it in.
-            input_width:150,
+            inputWidth:150,
             //empty search on focus
             //empty search on focus
             emptySearch:true,
@@ -186,7 +186,7 @@
             self._splitAt = new RegExp(regexString,"g");
 
             //add the html input
-            this.element.html('<li class="tagit-new" style="width:'+ self.options.input_width +'px"><input class="tagit-input" type="text" placeholder="'+ self.options.placeholder +'" /></li>');
+            this.element.html('<li class="tagit-new" style="width:'+ self.options.inputWidth +'px"><input class="tagit-input" type="text" placeholder="'+ self.options.placeholder +'" /></li>');
 
             this.input = this.element.find(".tagit-input");
             this.input.autoGrowInput();

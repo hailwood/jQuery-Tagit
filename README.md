@@ -140,7 +140,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
     </tr>
 
     <tr>
-      <td>input_width</td>
+      <td>inputWidth</td>
       <td>integer</td>
       <td>150</td>
       <td>The length of the input. It can be adjusted based on the palceholder.
