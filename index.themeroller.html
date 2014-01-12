@@ -193,7 +193,7 @@
 	  ];
 
 	  $('#demo1').tagit({tagSource:availableTags, select:true, sortable:true});
-	  $('#demo2').tagit({tagSource:availableTags});
+	  $('#demo2').tagit({tagSource:availableTags, placeholder: "Enter a programming language", input_width: 180});
 	  $('#demo3').tagit({tagSource:availableTags, triggerKeys:['enter', 'comma', 'tab']});
 	  $('#demo4').tagit({tagSource:availableTags, sortable:true, tagsChanged:function (a, b) {
 		$('#demo4Out').html(a + ' was ' + b);

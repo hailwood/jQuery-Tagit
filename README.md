@@ -132,6 +132,22 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
     </tr>
 
     <tr>
+      <td>placeholder</td>
+      <td>String</td>
+      <td>Enter tags...</td>
+      <td>The placeholder of the tagit field. It can be any string.
+      </td>
+    </tr>
+
+    <tr>
+      <td>input_width</td>
+      <td>integer</td>
+      <td>150</td>
+      <td>The length of the input. It can be adjusted based on the palceholder.
+      </td>
+    </tr>
+
+    <tr>
       <td>maxTags</td>
       <td>Int</td>
       <td>unlimited</td>
