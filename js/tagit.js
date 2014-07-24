@@ -273,7 +273,7 @@
             this.input.blur(function (e) {
                 self.currentLabel = $(this).val();
                 self.currentValue = $(this).data('value');
-                if (self.options.allowNewTags && self.currentLabel.length >= this.options.minLength) {
+                if (self.options.allowNewTags && self.currentLabel.length >= self.options.minLength) {
                     self.timer = setTimeout(function () {
                         self._addTag({ label: self.currentLabel, value: self.currentValue, type: self.options.defaultType});
                         self.currentValue = '';
