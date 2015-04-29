@@ -165,6 +165,15 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
           If 'handle' a handle is rendered and the tag is only dragable using the handle.
       </td>
     </tr>
+    
+    <tr>
+      <td>allowDuplicates</td>
+      <td>Bool</td>
+      <td>False</td>
+      <td>Allow Duplicate tags if set to true "allowDuplicates:true"
+      </td>
+    </tr>
+
   </tbody>
 </table>
 
