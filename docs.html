@@ -8,8 +8,9 @@
   <link href="demo/css/demo.css" rel="stylesheet" type="text/css"/>
 
   <script>
+/*globals $*/
 
-	$(function () {
+	$(function () { 'use strict';
 
 	  $('.browser').hover(
 		function () {
@@ -19,8 +20,9 @@
 		  $(this).children('a').children('div').hide('fast');
 		});
 
-	  setInterval("$('#fork').effect('pulsate', { times:1 }, 500);", 5000);
-
+	  setInterval(function () {
+        $('#fork').effect('pulsate', { times:1 }, 500);
+      }, 5000);
 
 	});
   </script>
