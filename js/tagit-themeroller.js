@@ -8,9 +8,9 @@
  * ---------------------------
  */
 
-(function($) {'use strict';
+(function ($) {'use strict';
 
-    $.fn.autoGrowInput = function(o) {
+    $.fn.autoGrowInput = function (o) {
        
         o = $.extend({
             maxWidth: 1000,
@@ -33,7 +33,7 @@
                     letterSpacing: input.css('letterSpacing'),
                     whiteSpace: 'nowrap'
                 }),
-                check = function() {
+                check = function () {
 
                     if (val === (val = input.val())) {return;}
 
