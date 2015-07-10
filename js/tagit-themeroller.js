@@ -344,7 +344,7 @@
 
             this.isKeyEventProcessed = true;
 
-            if (pressedKey === this._keys.backspace) {
+            if (pressedKey === this._keys.backspace[0]) {
                 return this._backspace(lastLi);
             }
 
@@ -587,13 +587,13 @@
         _backspace: function (li) {
             if (this.input.val() === "") {
                 // When backspace is pressed, the last tag is deleted.
-                if (this.lastKey === this._keys.backspace) {
+                if (this.lastKey === this._keys.backspace[0]) {
                     this._popTag();
                     li.remove();
                     this.lastKey = null;
                 } else {
                     li.removeClass('ui-state-default').addClass('selected ui-state-error');
-                    this.lastKey = this._keys.backspace;
+                    this.lastKey = this._keys.backspace[0];
                 }
             }
             return true;
