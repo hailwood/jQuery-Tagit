@@ -19,9 +19,10 @@ function getTags($id)
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <title>jQuery Tagit Demo Page (PHP<?php echo isset($themeroller) ? '/ThemeRoller' : ''; ?>)</title>
 <?php
 echo js('demo/js/jquery.1.7.2.min.js');
