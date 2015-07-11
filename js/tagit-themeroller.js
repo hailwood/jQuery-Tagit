@@ -78,7 +78,7 @@
                     ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
                     currentCategory = item.category;
                 }
-                that._renderItemData( ul, item );
+                that._renderItem( ul, item ).data( "ui-autocomplete-item", item);
             });
         }
     });
