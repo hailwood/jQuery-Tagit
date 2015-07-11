@@ -12,104 +12,111 @@
   <link rel="stylesheet" type="text/css" href="css/tagit-stylish-yellow.css">
 
   <script>
+/*globals $ */
+/*jslint vars:true */
 
-	$(function () {
-	  var availableTags = [
-		"ActionScript",
-		"AppleScript",
-		"Asp",
-		"BASIC",
-		"C",
-		"C++",
-		"Clojure",
-		"COBOL",
-		"ColdFusion",
-		"Erlang",
-		"Fortran",
-		"Groovy",
-		"Haskell",
-		"Java",
-		"JavaScript",
-		"Lisp",
-		"Perl",
-		"PHP",
-		"Python",
-		"Ruby",
-		"Scala",
-		"Scheme"
-	  ];
+    $(function () { 'use strict';
+        function showTags(tags) {
+            console.log(tags);
+            var string = "Tags (label : value)\r\n";
+            string += "--------\r\n";
+            var i;
+            for (i in tags) {
+                string += tags[i].label + " : " + tags[i].value + "\r\n";
+            }
+            alert(string);
+        }
 
-	  $('#demo1').tagit({tagSource:availableTags, select:true, sortable:true});
-	  $('#demo2').tagit({tagSource:availableTags, placeholder: "Enter a programming language", inputWidth: 180});
-	  $('#demo3').tagit({tagSource:availableTags, triggerKeys:['enter', 'comma', 'tab']});
-	  $('#demo4').tagit({tagSource:availableTags, sortable:true, tagsChanged:function (a, b) {
-		$('#demo4Out').html(a + ' was ' + b);
-	  } });
-	  $('#demo5').tagit({maxLength:5, maxTags:5 });
-	  $('#demo6').tagit({tagSource:availableTags, sortable:true});
-	  $('#demo7').tagit({tagSource:availableTags, sortable:'handle'});
-	  $('#demo9').tagit({tagSource:availableTags, editable: true});
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
 
-
-	  $('#demo1GetTags').click(function () {
-		showTags($('#demo1').tagit('tags'))
-	  });
-	  $('#demo2GetTags').click(function () {
-		showTags($('#demo2').tagit('tags'))
-	  });
-	  $('#demo2ResetTags').click(function () {
-		$('#demo2').tagit('reset')
-	  });
-	  $('#demo3GetTags').click(function () {
-		showTags($('#demo3').tagit('tags'))
-	  });
-	  $('#demo4GetTags').click(function () {
-		showTags($('#demo4').tagit('tags'))
-	  });
-	  $('#demo5GetTags').click(function () {
-		showTags($('#demo5').tagit('tags'))
-	  });
-	  $('#demo6GetTags').click(function () {
-		showTags($('#demo6').tagit('tags'))
-	  });
-	  $('#demo7GetTags').click(function () {
-		showTags($('#demo7').tagit('tags'))
-	  });
-	  $('#demo8GetTags').click(function () {
-		showTags($('#demo8').tagit('tags'))
-	  });
-	  $('#demo9GetTags').click(function () {
-		showTags($('#demo9').tagit('tags'))
-	  });
-	  function showTags(tags) {
-		console.log(tags);
-		var string = "Tags (label : value)\r\n";
-		string += "--------\r\n";
-		for (var i in tags)
-		  string += tags[i].label + " : " + tags[i].value + "\r\n";
-		alert(string);
-	  }
-
-	  setInterval("$('#fork').effect('pulsate', { times:1 }, 500);", 5000);
+        $('#demo1').tagit({tagSource:availableTags, select:true, sortable:true});
+        $('#demo2').tagit({tagSource:availableTags, placeholder: "Enter a programming language", inputWidth: 180});
+        $('#demo3').tagit({tagSource:availableTags, triggerKeys:['enter', 'comma', 'tab']});
+        $('#demo4').tagit({tagSource:availableTags, sortable:true, tagsChanged:function (a, b) {
+            $('#demo4Out').html(a + ' was ' + b);
+        }});
+        $('#demo5').tagit({maxLength:5, maxTags:5 });
+        $('#demo6').tagit({tagSource:availableTags, sortable:true});
+        $('#demo7').tagit({tagSource:availableTags, sortable:'handle'});
+        $('#demo9').tagit({tagSource:availableTags, editable: true});
 
 
-	});
+        $('#demo1GetTags').click(function () {
+            showTags($('#demo1').tagit('tags'));
+        });
+        $('#demo2GetTags').click(function () {
+            showTags($('#demo2').tagit('tags'));
+        });
+        $('#demo2ResetTags').click(function () {
+            $('#demo2').tagit('reset');
+        });
+        $('#demo3GetTags').click(function () {
+            showTags($('#demo3').tagit('tags'));
+        });
+        $('#demo4GetTags').click(function () {
+            showTags($('#demo4').tagit('tags'));
+        });
+        $('#demo5GetTags').click(function () {
+            showTags($('#demo5').tagit('tags'));
+        });
+        $('#demo6GetTags').click(function () {
+            showTags($('#demo6').tagit('tags'));
+        });
+        $('#demo7GetTags').click(function () {
+            showTags($('#demo7').tagit('tags'));
+        });
+        $('#demo8GetTags').click(function () {
+            showTags($('#demo8').tagit('tags'));
+        });
+        $('#demo9GetTags').click(function () {
+            showTags($('#demo9').tagit('tags'));
+        });
+
+        setInterval(function () {
+            $('#fork').effect('pulsate', {times: 1}, 500);
+        }, 5000);
+
+
+    });
   </script>
 </head>
 <body>
 <a id="fork" href="https://github.com/hailwood/jQuery-Tagit">
   <img style="position: fixed; top: 0; left: 0; border: 0;"
-	   src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub">
+       src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub">
 </a>
 
 <div id="wrap">
 <div id="switcher_parent">
   <div id="switcher" class="notr">
-	<a href="index.themeroller.html">
-	  Tried Tagit with ThemeRoller?<br/>
-	  <img class="tr"
-		   src="http://www.filamentgroup.com/examples/RollAUI/images/themeroller_ready_white_400px.gif"/>
-	</a>
+    <a href="index.themeroller.html">
+      Tried Tagit with ThemeRoller?<br/>
+      <img class="tr"
+           src="http://www.filamentgroup.com/examples/RollAUI/images/themeroller_ready_white_400px.gif"/>
+    </a>
   </div>
 </div>
 <h1>jQuery Tagit Demo Page</h1>
@@ -122,12 +129,12 @@
 
 <div class="box">
   <div class="note">
-	Normally the select is hidden, however we have shown it for this demo so you can see
-	how it operates!
+    Normally the select is hidden, however we have shown it for this demo so you can see
+    how it operates!
   </div>
   <ul id="demo1" data-name="nameOfSelect"></ul>
   <div class="buttons">
-	<button id="demo1GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo1GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
@@ -135,7 +142,7 @@
 
 <div class="box">
   <div class="note">
-	You can manually specify tags in your markup by adding <em>list items</em> to the unordered list!
+    You can manually specify tags in your markup by adding <em>list items</em> to the unordered list!
   </div>
 
     <ul id="demo2" data-name="demo2">
@@ -147,8 +154,8 @@
         <li data-value="tags">tags</li>
     </ul>
   <div class="buttons">
-	<button id="demo2GetTags" value="Get Tags">Get Tags</button>
-	<button id="demo2ResetTags" value="Reset Tags">Reset Tags</button>
+    <button id="demo2GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo2ResetTags" value="Reset Tags">Reset Tags</button>
   </div>
 </div>
 
@@ -156,12 +163,12 @@
 
 <div class="box">
   <div class="note">
-	By overriding the <em>trigger keys</em> you can have spaces, comma's and any other character in your tags!
+    By overriding the <em>trigger keys</em> you can have spaces, comma's and any other character in your tags!
   </div>
 
   <ul id="demo3"></ul>
   <div class="buttons">
-	<button id="demo3GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo3GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
@@ -169,12 +176,12 @@
 
 <div class="box">
   <div class="note">
-	By passing a function in for <em>tagsChanged</em> you can preform your own events too!
+    By passing a function in for <em>tagsChanged</em> you can preform your own events too!
   </div>
 
   <ul id="demo4"></ul>
   <div class="buttons">
-	<button id="demo4GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo4GetTags" value="Get Tags">Get Tags</button>
   </div>
   <p>Action:
 
@@ -186,12 +193,12 @@
 
 <div class="box">
   <div class="note">
-	You can limit both the maximum and minimum amount of, and characters per tag!
+    You can limit both the maximum and minimum amount of, and characters per tag!
   </div>
 
   <ul id="demo5"></ul>
   <div class="buttons">
-	<button id="demo5GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo5GetTags" value="Get Tags">Get Tags</button>
   </div>
   <p>Maximum of 5 tags and 5 characters per tag.</p>
 </div>
@@ -200,18 +207,18 @@
 
 <div class="box">
   <div class="note">
-	You can allow the tags to be sortable by dragging the entire tag!
+    You can allow the tags to be sortable by dragging the entire tag!
   </div>
 
   <ul id="demo6" name="demo6">
-	<li>here</li>
-	<li>are</li>
-	<li>some</li>
-	<li>initial</li>
-	<li>tags</li>
+    <li>here</li>
+    <li>are</li>
+    <li>some</li>
+    <li>initial</li>
+    <li>tags</li>
   </ul>
   <div class="buttons">
-	<button id="demo6GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo6GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
@@ -219,18 +226,18 @@
 
 <div class="box">
   <div class="note">
-	Or only draggable by a handle!
+    Or only draggable by a handle!
   </div>
 
   <ul id="demo7" name="demo7">
-	<li>here</li>
-	<li>are</li>
-	<li>some</li>
-	<li>initial</li>
-	<li>tags</li>
+    <li>here</li>
+    <li>are</li>
+    <li>some</li>
+    <li>initial</li>
+    <li>tags</li>
   </ul>
   <div class="buttons">
-	<button id="demo7GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo7GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
@@ -238,18 +245,18 @@
 
 <div class="box">
   <div class="note">
-	Click on a tag to edit it!
+    Click on a tag to edit it!
   </div>
 
   <ul id="demo9" name="demo9">
-	<li>here</li>
-	<li>are</li>
-	<li>some</li>
-	<li>initial</li>
-	<li>tags</li>
+    <li>here</li>
+    <li>are</li>
+    <li>some</li>
+    <li>initial</li>
+    <li>tags</li>
   </ul>
   <div class="buttons">
-	<button id="demo9GetTags" value="Get Tags">Get Tags</button>
+    <button id="demo9GetTags" value="Get Tags">Get Tags</button>
   </div>
 </div>
 
@@ -257,15 +264,15 @@
 
 <div class="box">
   <div class="note">
-	You can hack into the autocomplete dropdown to display custom data!
+    You can hack into the autocomplete dropdown to display custom data!
   </div>
 
   <div class="note">
-	While this demo could be done using either the <a href="index.themeroller.html">themeroller</a> or normal version
-	for simplicities sake we have only created this particular demo using <a
-	href="index.themeroller.html">themeroller</a>.
-	<hr/>
-	Please <a href="index.themeroller.html#demo8">Click here to view this demo</a>!
+    While this demo could be done using either the <a href="index.themeroller.html">themeroller</a> or normal version
+    for simplicities sake we have only created this particular demo using <a
+    href="index.themeroller.html">themeroller</a>.
+    <hr/>
+    Please <a href="index.themeroller.html#demo8">Click here to view this demo</a>!
   </div>
 </div>
 
