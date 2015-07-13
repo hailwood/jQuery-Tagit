@@ -130,7 +130,11 @@
             maxTags: undefined,
             //should 'paste' event trigger 'blur', thus potentially adding a new tag
             // (true for backwards compatibility)
-            blurOnPaste: true
+            blurOnPaste: true,
+            //Add functionality to allow duplicates
+            //False uses normal behavior
+            //True allows Duplicate Tags to be used
+            allowDuplicates: false
         },
 
         _splitAt: /\ |,/g,
@@ -494,7 +498,7 @@
             newTag.label = newTag.label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             
             var tagExists = this._exists(newTag.label, newTag.value);
-            if (tagExists !== false) {
+            if (tagExists !== false && !this.options.allowDuplicates) {
                 this._highlightExisting(tagExists);
                 return false;
             }
