@@ -43,13 +43,11 @@ body {
 	margin: 20px auto;
 	padding: 16px;
 	font-weight: normal;
-	-moz-border-radius: 11px;
 	-khtml-border-radius: 11px;
 	-webkit-border-radius: 11px;
 	border-radius: 5px;
 	background: #fff;
 	border: 1px solid #e5e5e5;
-	-moz-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
 	-webkit-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
 	-khtml-box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
 	box-shadow: rgba(200, 200, 200, 1) 0 4px 18px;
@@ -131,7 +129,6 @@ table {
 	margin: 0 auto;
 	border-collapse: collapse;
 	background-color: #fff;
-	-moz-box-shadow: rgba(200, 200, 200, 1) 0 4px 4px;
 	-webkit-box-shadow: rgba(200, 200, 200, 1) 0 4px 4px;
 	-khtml-box-shadow: rgba(200, 200, 200, 1) 0 4px 4px;
 	box-shadow: rgba(200, 200, 200, 1) 0 4px 4px;
@@ -202,7 +199,7 @@ thead th {
 	top: 50%;
 	display: none;
 	background-color: rgba(0, 0, 0, 0.8);
-	*background-color: #000000;
+	/*background-color: #000000;*/
 	text-align: center;
 	height: 25px;
 	line-height: 25px;
