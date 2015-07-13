@@ -1,5 +1,5 @@
 This file contains a list of credits/bug fixes that existed before the project 
-was moved to github. The contents of this file were originally in the javascript
+was moved to Github. The contents of this file were originally in the JavaScript
 file however have been removed to keep the file as lean as possible. 
 
 *

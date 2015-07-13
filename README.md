@@ -170,7 +170,7 @@ Why unique? Because jQuery Tagit uses jQuery UI's auto-complete plugin to supply
       <td>allowDuplicates</td>
       <td>Bool</td>
       <td>False</td>
-      <td>Allow Duplicate tags if set to true "allowDuplicates:true"
+      <td>Allow Duplicate tags if set to true
       </td>
     </tr>
 
