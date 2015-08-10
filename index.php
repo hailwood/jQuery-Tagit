@@ -19,9 +19,10 @@ function getTags($id)
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <title>jQuery Tagit Demo Page (PHP<?php echo isset($themeroller) ? '/ThemeRoller' : ''; ?>)</title>
 <?php
 echo js('demo/js/jquery.1.7.2.min.js');
@@ -252,13 +253,13 @@ $(function () {
 	}});
 
 	//get a reference to the autocomplete object
-	var ac = $('#demo8').tagit('autocomplete');
+	var ac = $('#demo8').data('tagit').input.data('catcomplete');
 
 	//add a custom class for themeing
 	ac.menu.element.addClass('custom-ac');
 
 	//attach the autocomplete to the bottom left of the tag list
-	ac.options.position = {    my:"left top", at:"left bottom", collision:"none", of:$('#demo8').data('tagit').element };
+	ac.options.position = {my: "left top", at: "left bottom", collision: "none", of: $('#demo8').data('tagit').element};
 
 	//overwrite the autocomplete _renderItem function!
 	ac._renderItem = function (ul, item) {
