@@ -475,6 +475,9 @@
             if (newTag.label === undefined) { //set label to value to simplify possible use-cases, eg. if we send data from server where title isn't set
                 newTag.label = newTag.value;
             }
+            if(newTag.label === parseInt(newTag.label, 10)){
+                    newTag.label=newTag.label.toString();
+            }
             this.input.catcomplete('close').val("");
 
             //are we trying to add a tag that should be split?
